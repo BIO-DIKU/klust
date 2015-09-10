@@ -18,32 +18,8 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_FASTA_WRITER_H
-#define SRC_FASTA_WRITER_H
+#include "naive_clust.h"
 
-#include <iostream>
-#include <string>
-
-#include "Sequence.h"
-
-class FastaWriter {
-    public:
-        FastaWriter(const FastaWriter&) = delete;
-        FastaWriter& operator=(const FastaWriter&) = delete;
-
-        FastaWriter();
-        virtual ~FastaWriter();
-
-        int openCoutWriter();
-        int openFileWriter(const std::string& filename);
-
-        void closeWriter();
-
-        int write(const Sequence& seq); // TODO
-
-    private:
-        std::ofstream* m_writeFileStream;
-        std::ostream* m_writeStream;
-};
-
-#endif // SRC_FASTA_WRITER_H
+int NaiveClust::addSequence(Sequence&) {
+    return 0;
+}

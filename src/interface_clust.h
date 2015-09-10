@@ -18,33 +18,26 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_SEQUENCE_H
-#define SRC_SEQUENCE_H
+#ifndef SRC_INTERFACE_CLUST_H
+#define SRC_INTERFACE_CLUST_H
 
-#include <string>
+#include "sequence.h"
+#include "interface_compare.h"
+#include "interface_kmergen.h"
 
-#include "Defines.h"
-
-class Sequence {
+class InterfaceClust {
     public:
-        Sequence(const std::string& sequence = "",
-                 const std::string& comment = "",
-                 int lineNumber = -1);
-        Sequence(const Sequence& other);
-        Sequence(Sequence&& other) noexcept;
-        Sequence& operator=(const Sequence& other);
+        /**
+        * Returns positive value if seq must be written to file
+        */
+        virtual int addSequence(Sequence& seq) = 0;
 
-        virtual ~Sequence();
+        void setCompare(InterfaceCompare* compare) { m_compare = compare; }
+        void setKmergen(InterfaceKmergen* kmergen) { m_kmergen = kmergen; }
 
-        bool kmersGenerated() const;
-
-    public:
-        std::string m_sequence;
-        std::string m_comment;
-        int m_lineNumber;
-
-        KmerType* m_kmers;
-        int m_kmersSize;
+    private:
+        InterfaceCompare* m_compare;
+        InterfaceKmergen* m_kmergen;
 };
 
-#endif // SRC_SEQUENCE_H
+#endif // SRC_INTERFACE_CLUST_H

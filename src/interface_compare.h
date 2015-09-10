@@ -18,26 +18,20 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_INTERFACE_CLUST_H
-#define SRC_INTERFACE_CLUST_H
+#ifndef SRC_INTERFACE_COMPARE_H
+#define SRC_INTERFACE_COMPARE_H
 
-#include "Sequence.h"
-#include "InterfaceCompare.h"
-#include "InterfaceKmergen.h"
+#include "sequence.h"
 
-class InterfaceClust {
+class InterfaceCompare {
     public:
-        /**
-        * Returns positive value if seq must be written to file
-        */
-        virtual int addSequence(Sequence& seq) = 0;
+        virtual bool compare(Sequence* seq1, Sequence* seq2) = 0;
 
-        void setCompare(InterfaceCompare* compare) { m_compare = compare; }
-        void setKmergen(InterfaceKmergen* kmergen) { m_kmergen = kmergen; }
+        void setIdentity(float id) { m_identity = id; }
+        float getIdentity() const { return m_identity; }
 
-    private:
-        InterfaceCompare* m_compare;
-        InterfaceKmergen* m_kmergen;
+    protected:
+        float m_identity; // Similarity identity
 };
 
-#endif // SRC_INTERFACE_CLUST_H
+#endif // SRC_INTERFACE_COMPARE_H

@@ -22,9 +22,9 @@
 #include <iostream>
 #include <string>
 
-#include "Defines.h"
-#include "MainControl.h"
-#include "modules/NaiveClust.h"
+#include "defines.h"
+#include "main_control.h"
+#include "modules/naive_clust.h"
 
 static void PrintVersion() {
   std::cout << "This is the version.\n";

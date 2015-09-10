@@ -18,7 +18,7 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#include "MainControl.h"
+#include "main_control.h"
 
 MainControl::MainControl() :
     m_reader(new FastaReader()),

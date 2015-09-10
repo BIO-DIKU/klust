@@ -18,14 +18,33 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_MODULES_NAIVE_CLUST_H
-#define SRC_MODULES_NAIVE_CLUST_H
+#ifndef SRC_SEQUENCE_H
+#define SRC_SEQUENCE_H
 
-#include "../InterfaceClust.h"
+#include <string>
 
-class NaiveClust : public InterfaceClust {
+#include "defines.h"
+
+class Sequence {
     public:
-        int addSequence(Sequence& seq);
+        Sequence(const std::string& sequence = "",
+                 const std::string& comment = "",
+                 int lineNumber = -1);
+        Sequence(const Sequence& other);
+        Sequence(Sequence&& other) noexcept;
+        Sequence& operator=(const Sequence& other);
+
+        virtual ~Sequence();
+
+        bool kmersGenerated() const;
+
+    public:
+        std::string m_sequence;
+        std::string m_comment;
+        int m_lineNumber;
+
+        KmerType* m_kmers;
+        int m_kmersSize;
 };
 
-#endif // SRC_MODULES_NAIVE_CLUST_H
+#endif // SRC_SEQUENCE_H

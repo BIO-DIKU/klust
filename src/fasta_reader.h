@@ -18,20 +18,31 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_INTERFACE_COMPARE_H
-#define SRC_INTERFACE_COMPARE_H
+#ifndef SRC_FASTA_READER_H_
+#define SRC_FASTA_READER_H_
 
-#include "Sequence.h"
+#include <fstream>
+#include <string>
 
-class InterfaceCompare {
+#include "sequence.h"
+
+class FastaReader {
     public:
-        virtual bool compare(Sequence* seq1, Sequence* seq2) = 0;
+        FastaReader(const FastaReader&) = delete;
+        FastaReader& operator=(const FastaReader&) = delete;
 
-        void setIdentity(float id) { m_identity = id; }
-        float getIdentity() const { return m_identity; }
+        FastaReader();
+        virtual ~FastaReader();
 
-    protected:
-        float m_identity; // Similarity identity
+        int openReader(const std::string& filename);
+        void closeReader();
+
+        int getNextLine(Sequence& seq);
+
+    private:
+        std::ifstream* m_reader;
+        std::string m_readComment;
+        int m_nextLineNumber;
 };
 
-#endif // SRC_INTERFACE_COMPARE_H
+#endif // SRC_FASTA_READER_H_

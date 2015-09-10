@@ -18,31 +18,14 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_FASTA_READER_H
-#define SRC_FASTA_READER_H
+#ifndef SRC_INTERFACE_KMERGEN_H
+#define SRC_INTERFACE_KMERGEN_H
 
-#include <fstream>
-#include <string>
+#include "sequence.h"
 
-#include "Sequence.h"
-
-class FastaReader {
+class InterfaceKmergen {
     public:
-        FastaReader(const FastaReader&) = delete;
-        FastaReader& operator=(const FastaReader&) = delete;
-
-        FastaReader();
-        virtual ~FastaReader();
-
-        int openReader(const std::string& filename);
-        void closeReader();
-
-        int getNextLine(Sequence& seq);
-
-    private:
-        std::ifstream* m_reader;
-        std::string m_readComment;
-        int m_nextLineNumber;
+        virtual void generateKmers(Sequence& seq) = 0;
 };
 
-#endif // SRC_FASTA_READER_H
+#endif // SRC_INTERFACE_KMERGEN_H

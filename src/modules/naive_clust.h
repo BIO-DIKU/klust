@@ -18,14 +18,14 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_INTERFACE_KMERGEN_H
-#define SRC_INTERFACE_KMERGEN_H
+#ifndef SRC_MODULES_NAIVE_CLUST_H
+#define SRC_MODULES_NAIVE_CLUST_H
 
-#include "Sequence.h"
+#include "../interface_clust.h"
 
-class InterfaceKmergen {
+class NaiveClust : public InterfaceClust {
     public:
-        virtual void generateKmers(Sequence& seq) = 0;
+        int addSequence(Sequence& seq);
 };
 
-#endif // SRC_INTERFACE_KMERGEN_H
+#endif // SRC_MODULES_NAIVE_CLUST_H

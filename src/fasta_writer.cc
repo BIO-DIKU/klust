@@ -18,9 +18,9 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#include "FastaWriter.h"
-
 #include <fstream>
+
+#include "fasta_writer.h"
 
 FastaWriter::FastaWriter() :
     m_writeFileStream(nullptr),
