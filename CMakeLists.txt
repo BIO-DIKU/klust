@@ -18,7 +18,7 @@ endif()
 # ------------------------
 # Thanks to Will Usher for this code snippet:
 # http://www.willusher.io/sdl2%20tutorials/2014/03/06/lesson-0-cmake/
-# 
+#
 # Bump up warning levels appropriately for clang, gcc & msvc
 # Also set debug/optimization flags depending on the build type. IDE users choose this when
 # selecting the build mode in their IDE
