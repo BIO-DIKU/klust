@@ -33,8 +33,8 @@ class MainControl {
         void setClust(InterfaceClust* clust);
 
     private:
-        FasteReader* m_reader;
-        FasteWriter* m_writer;
+        FastaReader* m_reader;
+        FastaWriter* m_writer;
 
         float m_identity; // Similarity identity
 

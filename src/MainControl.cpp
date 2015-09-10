@@ -1,8 +1,8 @@
 #include "MainControl.h"
 
 MainControl::MainControl() :
-    m_reader(new FasteReader()),
-    m_writer(new FasteWriter()),
+    m_reader(new FastaReader()),
+    m_writer(new FastaWriter()),
     m_identity(0.9f)
 {
     m_writer->openCoutWriter();

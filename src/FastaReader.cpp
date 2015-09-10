@@ -1,17 +1,17 @@
 #include "FastaReader.h"
 
-FasteReader::FasteReader() :
+FastaReader::FastaReader() :
     m_reader(nullptr),
     m_readComment(""),
     m_nextLineNumber(0)
 {
 }
 
-FasteReader::~FasteReader() {
+FastaReader::~FastaReader() {
     closeReader();
 }
 
-int FasteReader::openReader(const std::string& filename) {
+int FastaReader::openReader(const std::string& filename) {
     closeReader();
 
     m_reader = new std::ifstream(filename);
@@ -25,7 +25,7 @@ int FasteReader::openReader(const std::string& filename) {
     return 0;
 }
 
-void FasteReader::closeReader() {
+void FastaReader::closeReader() {
     if(m_reader) {
         if(m_reader->is_open()) {
             m_reader->close();
@@ -37,7 +37,7 @@ void FasteReader::closeReader() {
     m_nextLineNumber = 0;
 }
 
-int FasteReader::getNextLine(Sequence& seq) {
+int FastaReader::getNextLine(Sequence& seq) {
     if(m_reader == nullptr) {
         return -2;
     }

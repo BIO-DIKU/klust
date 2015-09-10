@@ -6,13 +6,13 @@
 
 #include "Sequence.h"
 
-class FasteWriter {
+class FastaWriter {
     public:
-        FasteWriter(const FasteWriter&) = delete;
-        FasteWriter& operator=(const FasteWriter&) = delete;
+        FastaWriter(const FastaWriter&) = delete;
+        FastaWriter& operator=(const FastaWriter&) = delete;
 
-        FasteWriter();
-        virtual ~FasteWriter();
+        FastaWriter();
+        virtual ~FastaWriter();
 
         int openCoutWriter();
         int openFileWriter(const std::string& filename);

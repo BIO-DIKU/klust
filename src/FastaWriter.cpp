@@ -2,23 +2,23 @@
 
 #include <fstream>
 
-FasteWriter::FasteWriter() :
+FastaWriter::FastaWriter() :
     m_writeFileStream(nullptr),
     m_writeStream(nullptr)
 {
 }
 
-FasteWriter::~FasteWriter() {
+FastaWriter::~FastaWriter() {
     closeWriter();
 }
 
-int FasteWriter::openCoutWriter() {
+int FastaWriter::openCoutWriter() {
     closeWriter();
     m_writeStream = &std::cout;
     return 0;
 }
 
-int FasteWriter::openFileWriter(const std::string& filename) {
+int FastaWriter::openFileWriter(const std::string& filename) {
     closeWriter();
 
     m_writeFileStream = new std::ofstream();
@@ -32,7 +32,7 @@ int FasteWriter::openFileWriter(const std::string& filename) {
     return 0;
 }
 
-void FasteWriter::closeWriter() {
+void FastaWriter::closeWriter() {
     if(m_writeFileStream) {
         m_writeFileStream->close();
 
@@ -46,7 +46,7 @@ void FasteWriter::closeWriter() {
     }
 }
 
-int FasteWriter::write(const Sequence& seq) {
+int FastaWriter::write(const Sequence& seq) {
     if(m_writeStream) {
         *m_writeStream << seq.m_sequence;
         return 0;

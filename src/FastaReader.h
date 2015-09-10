@@ -6,13 +6,13 @@
 
 #include "Sequence.h"
 
-class FasteReader {
+class FastaReader {
     public:
-        FasteReader(const FasteReader&) = delete;
-        FasteReader& operator=(const FasteReader&) = delete;
+        FastaReader(const FastaReader&) = delete;
+        FastaReader& operator=(const FastaReader&) = delete;
 
-        FasteReader();
-        virtual ~FasteReader();
+        FastaReader();
+        virtual ~FastaReader();
 
         int openReader(const std::string& filename);
         void closeReader();
