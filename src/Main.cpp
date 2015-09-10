@@ -1,92 +1,102 @@
+/*
+ * Copyright (C) 2015 BIO-DIKU.
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation; either version 2 of the License, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc., 51
+ * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+ *
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+#include <getopt.h>
 #include <iostream>
 #include <string>
 
 #include "Defines.h"
 #include "MainControl.h"
-
 #include "modules/NaiveClust.h"
 
-static void printVersion() {
-    std::cout << "This is the version.\n";
+static void PrintVersion() {
+  std::cout << "This is the version.\n";
 }
 
-static void printHelp() {
-    std::cout << "This is the help.\n";
+static void PrintHelp(char *argv[]) {
+  std::cout << "Usage: " << argv[0] << " [options] <file(s)>\n";
 }
 
-static void analyseInput(int argc, char** argv) {
-    if(argc <= 0 || argv == nullptr)
-        return;
+static int AnalyzeInput(int argc, char *argv[]) {
+  // CLI argument parsing
+  static struct option long_options[] = {
+    {"id",              required_argument,  0, 'i'},
+    {"output",          required_argument,  0, 'o'},
+    {"format",          required_argument,  0, 'f'},
+    {"complement",      no_argument,        0, 'c'},
+    {"comparison",      required_argument,  0, 'C'},
+    {"kmer_size",       required_argument,  0, 'k'},
+    {"sort_input",      required_argument,  0, 's'},
+    {"keep_names",      no_argument,        0, 'K'},
+    {"score_encoding",  required_argument,  0, 'E'},
+    {"score_min",       required_argument,  0, 'S'},
+    {"max_rejects",     required_argument,  0, 'm'},
+    {"threads",         required_argument,  0, 't'},
+    {"quiet",           no_argument,        0, 'q'},
+    {"version",         no_argument,        0, 'v'},
+    {"verbose",         no_argument,        0, 'V'},
+    {0,                 0,                  0,  0 }
+  };
 
-    std::string str(argv[0]);
-
-    if(str.size() > 2 && str[0] == '-' && str[1] == '-') {
-        if(str == "--id") {
-            if(argc >= 2) {
-                float id = std::stof(argv[1]);
-                MainControl::instance()->setIdentity(id);
-            }
-            return analyseInput(argc-2, &(argv[2]));
-        }
-        else if(str == "--output") {
-
-        }
-        else if(str == "--format") {
-
-        }
-        else if(str == "--complement") {
-
-        }
-        else if(str == "--comparison") {
-
-        }
-        else if(str == "--sort_input") {
-
-        }
-        else if(str == "--keep_names") {
-
-        }
-        else if(str == "--score_encoding") {
-
-        }
-        else if(str == "--score_min") {
-
-        }
-        else if(str == "--max_rejects") {
-
-        }
-        else if(str == "--threads") {
-
-        }
-        else if(str == "--quiet") {
-
-        }
-        else if(str == "--version") {
-            printVersion();
-        }
-        else if(str == "--verbose") {
-
-        }
+  int opt, option_index = 0;
+  while ((opt = getopt_long(argc, argv, "i:o:f:cC:k:s:KE:S:m:t:qvV",
+          long_options, &option_index)) != -1) {
+    switch (opt) {
+      case 'i':
+        MainControl::instance()->setIdentity(atof(optarg));
+        break;
+      case 'o':
+        break;
+      case 'f':
+        break;
+      case 't':
+        break;
+      case 'q':
+        break;
+      case 'v':
+        PrintVersion();
+        break;
+      case 'V':
+        break;
+      default:
+        std::cout << "unexpected argument" << std::endl;
+        PrintHelp(argv);
+        return 1;
     }
-    else if(str.size() > 1 && str[0] == '-') {
+  }
 
-    }
-    else {
-        printHelp();
-    }
+  if (argc < optind + 1) {
+    PrintHelp(argv);
+    return 1;
+  }
+
+  return 0;
 }
 
-int main(int argc, char** argv) {
-    if(argc <= 1) {
-        printHelp();
-        return 0;
-    }
+int main(int argc, char *argv[]) {
+  if (int ret = AnalyzeInput(argc, argv))
+    return ret;
 
-    analyseInput(argc-1, &(argv[1]));
+  // MainControl::instance()->setKmergen(new NaiveKmergen());
+  // MainControl::instance()->setCompare(new NaiveCompare());
+  // MainControl::instance()->setClust(new NaiveClust());
 
-    //MainControl::instance()->setKmergen(new NaiveKmergen());
-    //MainControl::instance()->setCompare(new NaiveCompare());
-    //MainControl::instance()->setClust(new NaiveClust());
-
-    return MainControl::instance()->run();
+  return MainControl::instance()->run();
 }
