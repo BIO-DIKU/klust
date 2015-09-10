@@ -39,7 +39,7 @@ endif()
 
 # Executable
 # ------------------------
-FILE(GLOB SOURCE_FILES src/*.cpp src/modules/*.cpp)
+FILE(GLOB SOURCE_FILES src/*.cc src/modules/*.cc)
 FILE(GLOB HEADER_FILES src/*.h src/modules/*.h)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})

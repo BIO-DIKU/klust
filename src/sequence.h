@@ -23,7 +23,7 @@
 
 #include <string>
 
-#include "Defines.h"
+#include "defines.h"
 
 class Sequence {
     public:

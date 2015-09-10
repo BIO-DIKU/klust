@@ -24,7 +24,7 @@
 #include <iostream>
 #include <string>
 
-#include "Sequence.h"
+#include "sequence.h"
 
 class FastaWriter {
     public:

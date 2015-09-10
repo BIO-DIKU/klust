@@ -18,13 +18,13 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_FASTA_READER_H
-#define SRC_FASTA_READER_H
+#ifndef SRC_FASTA_READER_H_
+#define SRC_FASTA_READER_H_
 
 #include <fstream>
 #include <string>
 
-#include "Sequence.h"
+#include "sequence.h"
 
 class FastaReader {
     public:
@@ -45,4 +45,4 @@ class FastaReader {
         int m_nextLineNumber;
 };
 
-#endif // SRC_FASTA_READER_H
+#endif // SRC_FASTA_READER_H_

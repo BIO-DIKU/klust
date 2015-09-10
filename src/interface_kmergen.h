@@ -21,7 +21,7 @@
 #ifndef SRC_INTERFACE_KMERGEN_H
 #define SRC_INTERFACE_KMERGEN_H
 
-#include "Sequence.h"
+#include "sequence.h"
 
 class InterfaceKmergen {
     public:

@@ -21,9 +21,9 @@
 #ifndef SRC_INTERFACE_CLUST_H
 #define SRC_INTERFACE_CLUST_H
 
-#include "Sequence.h"
-#include "InterfaceCompare.h"
-#include "InterfaceKmergen.h"
+#include "sequence.h"
+#include "interface_compare.h"
+#include "interface_kmergen.h"
 
 class InterfaceClust {
     public:

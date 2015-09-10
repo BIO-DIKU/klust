@@ -18,7 +18,7 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#include "NaiveClust.h"
+#include "naive_clust.h"
 
 int NaiveClust::addSequence(Sequence&) {
     return 0;

@@ -23,11 +23,11 @@
 
 #include <string>
 
-#include "FastaReader.h"
-#include "FastaWriter.h"
-#include "InterfaceCompare.h"
-#include "InterfaceClust.h"
-#include "InterfaceKmergen.h"
+#include "fasta_reader.h"
+#include "fasta_writer.h"
+#include "interface_compare.h"
+#include "interface_clust.h"
+#include "interface_kmergen.h"
 
 class MainControl {
     private:

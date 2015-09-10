@@ -18,7 +18,7 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#include "Sequence.h"
+#include "sequence.h"
 
 Sequence::Sequence(const std::string& sequence,
                    const std::string& comment,

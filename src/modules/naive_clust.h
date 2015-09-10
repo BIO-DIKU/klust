@@ -21,7 +21,7 @@
 #ifndef SRC_MODULES_NAIVE_CLUST_H
 #define SRC_MODULES_NAIVE_CLUST_H
 
-#include "../InterfaceClust.h"
+#include "../interface_clust.h"
 
 class NaiveClust : public InterfaceClust {
     public:
