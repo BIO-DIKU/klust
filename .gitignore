@@ -44,3 +44,7 @@ Makefile
 
 # OSX
 .DS_Store
+
+# Ctags
+.tags*
+tags
