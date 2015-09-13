@@ -18,7 +18,7 @@ endif()
 # ------------------------
 # Thanks to Will Usher for this code snippet:
 # http://www.willusher.io/sdl2%20tutorials/2014/03/06/lesson-0-cmake/
-# 
+#
 # Bump up warning levels appropriately for clang, gcc & msvc
 # Also set debug/optimization flags depending on the build type. IDE users choose this when
 # selecting the build mode in their IDE
@@ -39,7 +39,7 @@ endif()
 
 # Executable
 # ------------------------
-FILE(GLOB SOURCE_FILES src/*.cpp src/modules/*.cpp)
+FILE(GLOB SOURCE_FILES src/*.cc src/modules/*.cc)
 FILE(GLOB HEADER_FILES src/*.h src/modules/*.h)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
