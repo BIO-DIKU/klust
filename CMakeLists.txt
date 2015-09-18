@@ -13,6 +13,10 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/bin" CACHE PATH "default install path" FORCE)
 endif()
 
+if (NOT CMAKE_BUILD_TYPE)
+   set(CMAKE_BUILD_TYPE Release)
+endif()
+
 
 # Compiler options
 # ------------------------
@@ -37,9 +41,33 @@ elseif (${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
 endif()
 
 
+# Find Catch
+# ------------------------
+FIND_PATH(CATCH_INCLUDE_PATH
+    catch.hpp
+    PATHS
+        ${CMAKE_SOURCE_DIR}/contrib
+        /usr/local/include/catch
+        /usr/local/include
+        /usr/include
+)
+
 # Executable
 # ------------------------
 FILE(GLOB SOURCE_FILES src/*.cc src/modules/*.cc)
 FILE(GLOB HEADER_FILES src/*.h src/modules/*.h)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
+
+
+# Build tests if CMAKE_BUILD_TYPE=Debug is set
+# ------------------------
+if (CMAKE_BUILD_TYPE MATCHES DEBUG OR CMAKE_BUILD_TYPE MATCHES "Debug")
+    if (NOT CATCH_INCLUDE_PATH)
+        MESSAGE(SEND_ERROR "Could not find file catch.hpp")
+    else()
+        include_directories(${CATCH_INCLUDE_PATH})
+        FILE(GLOB TEST_FILES test/*.cc test/modules/*.cc)
+        add_executable("${PROJECT_NAME}-test" ${TEST_FILES})
+    endif()
+endif()

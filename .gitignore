@@ -32,6 +32,7 @@
 .idea/
 
 # Folders
+build/
 out/
 bin/
 doc/
