@@ -46,10 +46,7 @@ endif()
 FIND_PATH(CATCH_INCLUDE_PATH
     catch.hpp
     PATHS
-        ${CMAKE_SOURCE_DIR}/contrib
-        /usr/local/include/catch
-        /usr/local/include
-        /usr/include
+        ${CMAKE_SOURCE_DIR}/test
 )
 
 # Executable
