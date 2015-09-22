@@ -77,3 +77,47 @@ Sequence::~Sequence() {
 bool Sequence::kmersGenerated() const {
     return m_kmers;
 }
+
+const std::string& Sequence::getSequence() const {
+    return m_sequence;
+}
+
+std::string& Sequence::getSequence() {
+    return m_sequence;
+}
+
+void Sequence::setSequence(const std::string& str) {
+    m_sequence = str;
+}
+
+const std::string& Sequence::getComment() const {
+    return m_comment;
+}
+
+std::string& Sequence::getComment() {
+    return m_comment;
+}
+
+void Sequence::setComment(const std::string& str) {
+    m_comment = str;
+}
+
+int Sequence::getLineNumber() const {
+    return m_lineNumber;
+}
+
+void Sequence::setLineNumber(int lineNumber) {
+    m_lineNumber = lineNumber;
+}
+
+const KmerType* Sequence::getKmer() const {
+    return m_kmers;
+}
+
+KmerType* Sequence::getKmer() {
+    return m_kmers;
+}
+
+int Sequence::getKmersNum() const {
+    return m_kmersSize;
+}
