@@ -18,23 +18,14 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_INTERFACE_KMERGEN_H
-#define SRC_INTERFACE_KMERGEN_H
+#ifndef SRC_MODULE_KMERGEN_H
+#define SRC_MODULE_KMERGEN_H
 
-#include "sequence.h"
+#include "../interface_kmergen.h"
 
-class InterfaceKmergen {
+class KmerGen : public InterfaceKmergen {
     public:
-        virtual void generateKmers(Sequence& seq) = 0;
-
-    public:
-        InterfaceKmergen() { m_k = 8; }
-
-        unsigned int getK() const { return m_k; }
-        void setK(unsigned int k) { m_k = k; }
-
-    private:
-        unsigned int m_k;
+        void generateKmers(Sequence& seq);
 };
 
-#endif // SRC_INTERFACE_KMERGEN_H
+#endif // SRC_MODULE_KMERGEN_H

@@ -18,23 +18,21 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_INTERFACE_KMERGEN_H
-#define SRC_INTERFACE_KMERGEN_H
+#include "kmer_gen.h"
 
-#include "sequence.h"
+#include <string>
 
-class InterfaceKmergen {
-    public:
-        virtual void generateKmers(Sequence& seq) = 0;
+void KmerGen::generateKmers(Sequence& seq) {
+    std::string& str = seq.m_sequence;
+    const char* ptr = str.data();
+    unsigned int kmerNum = str.size() - getK();
 
-    public:
-        InterfaceKmergen() { m_k = 8; }
+    if(seq.m_kmers) {
+        delete[] seq.m_kmers;
+    }
+    seq.m_kmers = new KmerType[kmerNum];
 
-        unsigned int getK() const { return m_k; }
-        void setK(unsigned int k) { m_k = k; }
-
-    private:
-        unsigned int m_k;
-};
-
-#endif // SRC_INTERFACE_KMERGEN_H
+    for(unsigned int i; i < kmerNum; ++i) {
+        seq.m_kmers[i] = ((const KmerType*)ptr)[i];
+    }
+}
