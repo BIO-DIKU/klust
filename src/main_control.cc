@@ -42,7 +42,7 @@ MainControl* MainControl::instance() {
 
 int MainControl::run() {
     if(m_compare == nullptr || m_clust == nullptr || m_kmergen == nullptr) {
-        return -1;
+        return EXIT_FAILURE;
     }
 
     m_compare->setIdentity(m_identity);
@@ -56,7 +56,7 @@ int MainControl::run() {
         }
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 void MainControl::setIdentity(float id) {
