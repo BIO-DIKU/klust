@@ -1,10 +1,13 @@
 #include "levenshtein.h"
 
+#include "../sequence.h"
+
 #define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
 
 bool LevenshteinDistance::compare(Sequence* seq1, Sequence* seq2) {
     std::string str1 = seq1->getSequence();
     std::string str2 = seq2->getSequence();
+
     // degenerate cases
     if (&str1 == &str2) return 0.0f;
     if (str1.length() == 0) return str2.length();
@@ -51,7 +54,7 @@ bool LevenshteinDistance::compare(Sequence* seq1, Sequence* seq2) {
             delete[] v0;
             delete[] v1;
             // Fail Fast
-            return 1.0f;
+            return false;
         }
 
         // Swap pointer v0 and v1
@@ -65,5 +68,5 @@ bool LevenshteinDistance::compare(Sequence* seq1, Sequence* seq2) {
     delete[] v0;
     delete[] v1;
 
-    return ((float)(result - lengthDiff) / smallestLength) > getIdentity();
+    return ((float)(result - lengthDiff) / smallestLength) < getIdentity();
 }
