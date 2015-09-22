@@ -23,6 +23,7 @@
 
 #include <string>
 
+#include "../sequence.h"
 #include "../interface_compare.h"
 
 class LevenshteinDistance : public InterfaceCompare {
