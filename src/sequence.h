@@ -38,6 +38,22 @@ class Sequence {
 
         bool kmersGenerated() const;
 
+        const std::string& getSequence() const;
+        std::string& getSequence();
+        void setSequence(const std::string& str);
+
+        const std::string& getComment() const;
+        std::string& getComment();
+        void setComment(const std::string& str);
+
+        int getLineNumber() const;
+        void setLineNumber(int lineNumber);
+
+        const KmerType* getKmer() const;
+        KmerType* getKmer();
+
+        int getKmersNum() const;
+
     public:
         std::string m_sequence;
         std::string m_comment;
