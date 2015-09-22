@@ -78,16 +78,16 @@ static int AnalyzeInput(int argc, char *argv[]) {
       default:
         std::cout << "unexpected argument" << std::endl;
         PrintHelp(argv);
-        return 1;
+        return EXIT_FAILURE;
     }
   }
 
   if (argc < optind + 1) {
     PrintHelp(argv);
-    return 1;
+    return EXIT_FAILURE;
   }
 
-  return 0;
+  return EXIT_SUCCESS;
 }
 
 int main(int argc, char *argv[]) {
