@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 2.8)
 # About the project
 # ------------------------
 # Project name
-project(BIO-DIKU-klust)
+project(klust)
 
 
 # Options
