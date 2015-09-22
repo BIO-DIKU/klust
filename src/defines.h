@@ -18,11 +18,12 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef DEFINES_H
-#define DEFINES_H
+#ifndef SRC_DEFINES_H
+#define SRC_DEFINES_H
 
 #include <stddef.h>
+#include <cstdint>
 
-typedef long KmerType;
+typedef uint_fast64_t KmerType;
 
-#endif // DEFINES_H
+#endif // SRC_DEFINES_H
