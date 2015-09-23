@@ -20,18 +20,72 @@
 
 #include <getopt.h>
 #include <iostream>
-#include <string>
 
-#include "defines.h"
 #include "main_control.h"
-#include "modules/naive_clust.h"
 
 static void PrintVersion() {
   std::cout << "This is the version.\n";
 }
 
-static void PrintHelp(char *argv[]) {
-  std::cout << "Usage: " << argv[0] << " [options] <file(s)>\n";
+static void PrintHelp() {
+  std::cout <<
+  "Usage: klust [options] <file(s)>\n"
+  "\n"
+  "[options]:\n"
+  "-i --id <float>                         Similarity identity\n"
+  "                                        (default=0.9).\n"
+  "-o --output <string>                    Output file\n"
+  "                                        (default=stdout).\n"
+  "-f --format <int>                       Output format (default=1):\n"
+  "                                           1: Tabular.\n"
+  "                                           2: Centroids in\n"
+  "                                              FASTA/FASTQ format.\n"
+  "                                           3: Clusters in\n"
+  "                                              FASTA/FASTQ format.\n"
+  "                                           4: Pairwise sequence\n"
+  "                                              alignments in\n"
+  "                                              FASTA/FASTQ format.\n"
+  "                                           5: Pairwise sequence\n"
+  "                                              alignments in\n"
+  "                                              pretty printed format.\n"
+  "                                           6: Multiple sequence\n"
+  "                                              alignments in\n"
+  "                                              FASTA/FASTQ format.\n"
+  "                                           7: Multiple sequence\n"
+  "                                              alignments\n"
+  "                                              with consensus\n"
+  "                                              in FASTA/FASTQ format.\n"
+  "-p --protein                            Input sequences are protein.\n"
+  "-c --complement                         Also search the reverse\n"
+  "                                        complement strand.\n"
+  "-C --comparison <string>                Comparison type\n"
+  "                                        (default=kmer):\n"
+  "                                           kmer:  fast kmer based\n"
+  "                                                  comparison.\n"
+  "                                           align: slow alignment\n"
+  "                                                  based comparison.\n"
+  "-k --kmer_size <int>                    K-mer size to use for\n"
+  "                                        sequence comparison\n"
+  "                                        (default=5).\n"
+  "-s --sort_input <string>                Sort input sequences by:\n"
+  "                                        dec: decreasing length.\n"
+  "                                        inc: increasing length.\n"
+  "-K --keep_names                         Use sequence names instead\n"
+  "                                        of sequence indexes in\n"
+  "                                        output.\n"
+  "-E --score_encoding <Phred33|Phred64>   Specify FASTQ score encoding\n"
+  "                                        (default=Phred33).\n"
+  "-S --score_min <int>                    Minimum Phred score in\n"
+  "                                        matches.\n"
+  "-m --max_rejects <int>                  Max number of rejects when\n"
+  "                                        searching for centroid.\n"
+  "-t --threads <int>                      Threads to use (default=1).\n"
+  "-q --quiet                              Print nothing to stderr\n"
+  "                                        except fatal errors.\n"
+  "-v --version                            Output program version.\n"
+  "-V --verbose                            Enable verbose messages.\n"
+  "\n"
+  "Documentation: https://github.com/BIO-DIKU/klust";
 }
 
 static int AnalyzeInput(int argc, char *argv[]) {
@@ -77,13 +131,13 @@ static int AnalyzeInput(int argc, char *argv[]) {
         break;
       default:
         std::cout << "unexpected argument" << std::endl;
-        PrintHelp(argv);
+        PrintHelp();
         return EXIT_FAILURE;
     }
   }
 
   if (argc < optind + 1) {
-    PrintHelp(argv);
+    PrintHelp();
     return EXIT_FAILURE;
   }
 
