@@ -30,37 +30,37 @@
 #include "interface_kmergen.h"
 
 class MainControl {
-    private:
-        MainControl(const MainControl&) = delete;
-        MainControl& operator=(const MainControl&) = delete;
+ private:
+  MainControl(const MainControl&) = delete;
+  MainControl& operator=(const MainControl&) = delete;
 
-        MainControl();
+  MainControl();
 
-    public:
-        virtual ~MainControl();
+ public:
+  virtual ~MainControl();
 
-        static MainControl* instance();
-        int run();
+  static MainControl* instance();
+  int run();
 
-        void setIdentity(float id);
-        float getIdentity() const;
+  void setIdentity(float id);
+  float getIdentity() const;
 
-        void setInputFile(const std::string& filename);
-        void setOutputFile(const std::string& filename);
+  void setInputFile(const std::string& filename);
+  void setOutputFile(const std::string& filename);
 
-        void setKmergen(InterfaceKmergen* kmergen);
-        void setCompare(InterfaceCompare* compare);
-        void setClust(InterfaceClust* clust);
+  void setKmergen(InterfaceKmergen* kmergen);
+  void setCompare(InterfaceCompare* compare);
+  void setClust(InterfaceClust* clust);
 
-    private:
-        FastaReader* m_reader;
-        FastaWriter* m_writer;
+ private:
+  FastaReader* m_reader;
+  FastaWriter* m_writer;
 
-        float m_identity; // Similarity identity
+  float m_identity; // Similarity identity
 
-        InterfaceKmergen* m_kmergen;
-        InterfaceCompare* m_compare;
-        InterfaceClust* m_clust;
+  InterfaceKmergen* m_kmergen;
+  InterfaceCompare* m_compare;
+  InterfaceClust* m_clust;
 };
 
 #endif // SRC_MAIN_CONTROL_H

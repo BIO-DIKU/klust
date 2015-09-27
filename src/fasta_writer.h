@@ -27,23 +27,23 @@
 #include "sequence.h"
 
 class FastaWriter {
-    public:
-        FastaWriter(const FastaWriter&) = delete;
-        FastaWriter& operator=(const FastaWriter&) = delete;
+ public:
+  FastaWriter(const FastaWriter&) = delete;
+  FastaWriter& operator=(const FastaWriter&) = delete;
 
-        FastaWriter();
-        virtual ~FastaWriter();
+  FastaWriter();
+  virtual ~FastaWriter();
 
-        int openCoutWriter();
-        int openFileWriter(const std::string& filename);
+  int openCoutWriter();
+  int openFileWriter(const std::string& filename);
 
-        void closeWriter();
+  void closeWriter();
 
-        int write(const Sequence& seq); // TODO
+  int write(const Sequence& seq); // TODO
 
-    private:
-        std::ofstream* m_writeFileStream;
-        std::ostream* m_writeStream;
+ private:
+  std::ofstream* m_writeFileStream;
+  std::ostream* m_writeStream;
 };
 
 #endif // SRC_FASTA_WRITER_H
