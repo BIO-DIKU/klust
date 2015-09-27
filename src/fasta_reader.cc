@@ -21,68 +21,68 @@
 #include "fasta_reader.h"
 
 FastaReader::FastaReader() :
-    m_reader(nullptr),
-    m_readComment(""),
-    m_nextLineNumber(0) {
+  m_reader(nullptr),
+  m_readComment(""),
+  m_nextLineNumber(0) {
 }
 
 FastaReader::~FastaReader() {
-    closeReader();
+  closeReader();
 }
 
 int FastaReader::openReader(const std::string& filename) {
+  closeReader();
+
+  m_reader = new std::ifstream(filename);
+  m_nextLineNumber = 1;
+
+  if (!m_reader->is_open()) {
     closeReader();
+    return -1;
+  }
 
-    m_reader = new std::ifstream(filename);
-    m_nextLineNumber = 1;
-
-    if (!m_reader->is_open()) {
-        closeReader();
-        return -1;
-    }
-
-    return 0;
+  return 0;
 }
 
 void FastaReader::closeReader() {
-    if (m_reader) {
-        if (m_reader->is_open()) {
-            m_reader->close();
-        }
-        delete m_reader;
+  if (m_reader) {
+    if (m_reader->is_open()) {
+      m_reader->close();
     }
-    m_reader = nullptr;
-    m_readComment = "";
-    m_nextLineNumber = 0;
+    delete m_reader;
+  }
+  m_reader = nullptr;
+  m_readComment = "";
+  m_nextLineNumber = 0;
 }
 
 int FastaReader::getNextLine(Sequence& seq) {
-    if (m_reader == nullptr) {
-        return -2;
-    }
+  if (m_reader == nullptr) {
+    return -2;
+  }
 
-    if (m_readComment.size() > 0) {
-        seq.m_comment = std::string(m_readComment, 1);
+  if (m_readComment.size() > 0) {
+    seq.m_comment = std::string(m_readComment, 1);
+  } else {
+    seq.m_comment = "";
+  }
+
+  seq.m_sequence = "";
+  seq.m_lineNumber = 0;
+
+  while (std::getline(*m_reader, m_readComment)) {
+    if (m_readComment[0] != '>') {
+      seq.m_sequence += m_readComment;
+      if (seq.m_lineNumber == 0) {
+        seq.m_lineNumber = m_nextLineNumber;
+      }
+      m_nextLineNumber += 1;
+    } else if (seq.m_sequence == "") {
+      seq.m_comment = std::string(m_readComment, 1);
     } else {
-        seq.m_comment = "";
+      return 0;
     }
+  }
 
-    seq.m_sequence = "";
-    seq.m_lineNumber = 0;
-
-    while (std::getline(*m_reader, m_readComment)) {
-        if (m_readComment[0] != '>') {
-            seq.m_sequence += m_readComment;
-            if (seq.m_lineNumber == 0) {
-                seq.m_lineNumber = m_nextLineNumber;
-            }
-            m_nextLineNumber += 1;
-        } else if (seq.m_sequence == "") {
-            seq.m_comment = std::string(m_readComment, 1);
-        } else {
-            return 0;
-        }
-    }
-
-    return -1;
+  return -1;
 }

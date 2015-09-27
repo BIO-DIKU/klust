@@ -26,41 +26,41 @@
 #include "defines.h"
 
 class Sequence {
-    public:
-        Sequence(const std::string& sequence = "",
-                 const std::string& comment = "",
-                 int lineNumber = -1);
-        Sequence(const Sequence& other);
-        Sequence(Sequence&& other) noexcept;
-        Sequence& operator=(const Sequence& other);
+ public:
+  Sequence(const std::string& sequence = "",
+           const std::string& comment = "",
+           int lineNumber = -1);
+  Sequence(const Sequence& other);
+  Sequence(Sequence&& other) noexcept;
+  Sequence& operator=(const Sequence& other);
 
-        virtual ~Sequence();
+  virtual ~Sequence();
 
-        bool kmersGenerated() const;
+  bool kmersGenerated() const;
 
-        const std::string& getSequence() const;
-        std::string& getSequence();
-        void setSequence(const std::string& str);
+  const std::string& getSequence() const;
+  std::string& getSequence();
+  void setSequence(const std::string& str);
 
-        const std::string& getComment() const;
-        std::string& getComment();
-        void setComment(const std::string& str);
+  const std::string& getComment() const;
+  std::string& getComment();
+  void setComment(const std::string& str);
 
-        int getLineNumber() const;
-        void setLineNumber(int lineNumber);
+  int getLineNumber() const;
+  void setLineNumber(int lineNumber);
 
-        const KmerType* getKmer() const;
-        KmerType* getKmer();
+  const KmerType* getKmer() const;
+  KmerType* getKmer();
 
-        int getKmersNum() const;
+  int getKmersNum() const;
 
-    public:
-        std::string m_sequence;
-        std::string m_comment;
-        int m_lineNumber;
+ public:
+  std::string m_sequence;
+  std::string m_comment;
+  int m_lineNumber;
 
-        KmerType* m_kmers;
-        int m_kmersSize;
+  KmerType* m_kmers;
+  int m_kmersSize;
 };
 
 #endif // SRC_SEQUENCE_H

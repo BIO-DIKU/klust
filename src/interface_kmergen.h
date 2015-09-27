@@ -24,8 +24,8 @@
 #include "sequence.h"
 
 class InterfaceKmergen {
-    public:
-        virtual void generateKmers(Sequence& seq) = 0;
+ public:
+  virtual void generateKmers(Sequence& seq) = 0;
 };
 
 #endif // SRC_INTERFACE_KMERGEN_H

@@ -27,8 +27,8 @@
 #include "../interface_compare.h"
 
 class LevenshteinDistance : public InterfaceCompare {
-    public:
-        bool compare(Sequence* seq1, Sequence* seq2);
+ public:
+  bool compare(Sequence* seq1, Sequence* seq2);
 };
 
 #endif // SRC_MODULES_LEVENSHTEIN_H
