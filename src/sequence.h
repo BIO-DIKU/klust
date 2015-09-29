@@ -18,49 +18,51 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_SEQUENCE_H
-#define SRC_SEQUENCE_H
+#ifndef KLUST_SEQUENCE_H_
+#define KLUST_SEQUENCE_H_
 
 #include <string>
 
-#include "defines.h"
-
-class Sequence {
+class SeqEntry {
  public:
-  Sequence(const std::string& sequence = "",
-           const std::string& comment = "",
-           int lineNumber = -1);
-  Sequence(const Sequence& other);
-  Sequence(Sequence&& other) noexcept;
-  Sequence& operator=(const Sequence& other);
+  enum class SeqType {
+    rna,
+    dna,
+    protein,
+    unknown   // TODO
+  };
 
-  virtual ~Sequence();
+  SeqEntry();
+  SeqEntry(const std::string& name, const std::string& sequence,
+           const std::string& scores, SeqEntry::SeqType sequence_type);
 
-  bool kmersGenerated() const;
+  std::string ToFasta() const;
+  std::string ToFastq() const;
 
-  const std::string& getSequence() const;
-  std::string& getSequence();
-  void setSequence(const std::string& str);
+  /*
+   * Returns a SeqEntry containing the (consecutive) subsequence of the
+   * SeqEntry object it is called on, starting at the given index and of
+   * the given length.
+   */
+  SeqEntry SubSeq(int i, int len) const;
 
-  const std::string& getComment() const;
-  std::string& getComment();
-  void setComment(const std::string& str);
+  // accessors
+  const std::string& seq_name() const { return seq_name_; }
+  const std::string& seq() const { return seq_; }
+  const std::string& scores() const { return scores_; }
+  SeqType type() const { return type_; }
 
-  int getLineNumber() const;
-  void setLineNumber(int lineNumber);
+  // mutators
+  void set_seq_name(const std::string& name) { seq_name_ = name; }
+  void set_seq(const std::string& sequence) { seq_ = sequence; }
+  void set_scores(const std::string& scores) { scores_ = scores; }
+  void set_type(SeqType type) { type_ = type; }
 
-  const KmerType* getKmer() const;
-  KmerType* getKmer();
-
-  int getKmersNum() const;
-
- public:
-  std::string m_sequence;
-  std::string m_comment;
-  int m_lineNumber;
-
-  KmerType* m_kmers;
-  int m_kmersSize;
+ private:
+  std::string seq_name_;
+  std::string seq_;
+  std::string scores_;
+  SeqType type_;
 };
 
-#endif // SRC_SEQUENCE_H
+#endif // KLUST_SEQUENCE_H_
