@@ -25,7 +25,7 @@
 
 class NaiveClust : public InterfaceClust {
  public:
-  int addSequence(Sequence& seq);
+  int addSequence(SeqEntry& seq);
 };
 
 #endif // SRC_MODULES_NAIVE_CLUST_H

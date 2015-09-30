@@ -24,9 +24,9 @@
 
 #define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
 
-bool LevenshteinDistance::compare(Sequence* seq1, Sequence* seq2) {
-  std::string str1 = seq1->getSequence();
-  std::string str2 = seq2->getSequence();
+bool LevenshteinDistance::compare(SeqEntry* seq1, SeqEntry* seq2) {
+  std::string str1 = seq1->seq();
+  std::string str2 = seq2->seq();
 
   // degenerate cases
   if (&str1 == &str2) return 0.0f;

@@ -28,7 +28,7 @@
 
 class LevenshteinDistance : public InterfaceCompare {
  public:
-  bool compare(Sequence* seq1, Sequence* seq2);
+  bool compare(SeqEntry* seq1, SeqEntry* seq2);
 };
 
 #endif // SRC_MODULES_LEVENSHTEIN_H
