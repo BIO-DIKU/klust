@@ -111,7 +111,7 @@ static int AnalyzeInput(int argc, char *argv[]) {
   };
 
   int opt, option_index = 0;
-  while ((opt = getopt_long(argc, argv, "i:o:f:cC:k:s:KE:S:m:t:qvV",
+  while ((opt = getopt_long(argc, argv, "i:o:f:pcC:k:s:KE:S:m:t:qvV",
           long_options, &option_index)) != -1) {
     switch (opt) {
       case 'i':
