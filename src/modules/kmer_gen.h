@@ -24,8 +24,8 @@
 #include "../interface_kmergen.h"
 
 class KmerGen : public InterfaceKmergen {
-    public:
-        void generateKmers(Sequence& seq);
+  public:
+    void generateKmers(Sequence& seq);
 };
 
 #endif // SRC_MODULE_KMERGEN_H_
