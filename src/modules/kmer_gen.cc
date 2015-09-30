@@ -27,12 +27,13 @@ void KmerGen::generateKmers(Sequence& seq) {
   const char* ptr = str.data();
   unsigned int kmerNum = str.size() - getK();
 
-  if(seq.m_kmers) {
+  if (seq.m_kmers) {
     delete[] seq.m_kmers;
   }
+
   seq.m_kmers = new KmerType[kmerNum];
 
-  for(unsigned int i; i < kmerNum; ++i) {
+  for (auto i; i < kmerNum; ++i) {
     seq.m_kmers[i] = ((const KmerType*)ptr)[i];
   }
 }
