@@ -94,6 +94,7 @@ static int AnalyzeInput(int argc, char *argv[]) {
     {"id",              required_argument,  0, 'i'},
     {"output",          required_argument,  0, 'o'},
     {"format",          required_argument,  0, 'f'},
+    {"protein",         no_argument,        0, 'p'},
     {"complement",      no_argument,        0, 'c'},
     {"comparison",      required_argument,  0, 'C'},
     {"kmer_size",       required_argument,  0, 'k'},
@@ -110,7 +111,7 @@ static int AnalyzeInput(int argc, char *argv[]) {
   };
 
   int opt, option_index = 0;
-  while ((opt = getopt_long(argc, argv, "i:o:f:cC:k:s:KE:S:m:t:qvV",
+  while ((opt = getopt_long(argc, argv, "i:o:f:pcC:k:s:KE:S:m:t:qvV",
           long_options, &option_index)) != -1) {
     switch (opt) {
       case 'i':
@@ -119,6 +120,24 @@ static int AnalyzeInput(int argc, char *argv[]) {
       case 'o':
         break;
       case 'f':
+        break;
+      case 'p':
+        break;
+      case 'c':
+        break;
+      case 'C':
+        break;
+      case 'k':
+        break;
+      case 's':
+        break;
+      case 'K':
+        break;
+      case 'E':
+        break;
+      case 'S':
+        break;
+      case 'm':
         break;
       case 't':
         break;
