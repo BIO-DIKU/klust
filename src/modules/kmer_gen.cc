@@ -25,7 +25,7 @@
 void KmerGen::generateKmers(Sequence& seq) {
   std::string& str = seq.m_sequence;
   const char* ptr = str.data();
-  unsigned int kmerNum = str.size() - getK();
+  size_t kmerNum = str.size() - getK();
 
   if (seq.m_kmers) {
     delete[] seq.m_kmers;
@@ -33,7 +33,7 @@ void KmerGen::generateKmers(Sequence& seq) {
 
   seq.m_kmers = new KmerType[kmerNum];
 
-  for (auto i; i < kmerNum; ++i) {
+  for (size_t i = 0; i < kmerNum; ++i) {
     seq.m_kmers[i] = ((const KmerType*)ptr)[i];
   }
 }
