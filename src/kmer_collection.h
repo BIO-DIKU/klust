@@ -95,6 +95,10 @@ class KmerCollection {
  public:
   typedef KmerIterator iterator;
 
+  // Copying KmerCollection is not allowed, use std::move instead.
+  KmerCollection(const KmerCollection&) = delete;
+  KmerCollection& operator=(const KmerCollection&) = delete;
+
   KmerCollection(const std::string* seqEntry, int kmerSize, int scoreMin, int stepSize = 1) :
     m_seqEntry(seqEntry),
     m_kmerSize(kmerSize),
@@ -102,33 +106,42 @@ class KmerCollection {
     m_scoreMin(stepSize),
     m_kmerListProgress(-1),
     m_kmerListSize(seqEntry->size() - kmerSize + 1),
-    m_kmerList(new uint_fast64_t[m_kmerListSize])
-  {
-    const char* ptr = seqEntry->data();
-    for(int i = 0; i < m_kmerListSize; ++i) {
-      m_kmerList[i] = generateKmers8(&(ptr[i]));
-    }
-  }
+    m_kmerList(nullptr)
+  {}
 
-  KmerCollection(const KmerCollection& other) :
-    m_seqEntry(other.m_seqEntry),
-    m_kmerSize(other.m_kmerSize),
-    m_stepSize(other.m_scoreMin),
-    m_scoreMin(other.m_stepSize)
-    m_kmerListProgress(other.m_kmerListProgress),
-    m_kmerListSize(other.m_kmerListSize),
-    m_kmerList(new uint_fast64_t[m_kmerListSize])
+  KmerCollection(KmerCollection&& other) :
+    m_seqEntry(std::move(other.m_seqEntry)),
+    m_kmerSize(std::move(other.m_kmerSize)),
+    m_stepSize(std::move(other.m_stepSize)),
+    m_scoreMin(std::move(other.m_scoreMin)),
+    m_kmerListProgress(std::move(other.m_kmerListProgress)),
+    m_kmerListSize(std::move(other.m_kmerListSize)),
+    m_kmerList(std::move(other.m_kmerList))
   {
-    for(int i = 0; i < m_kmerListSize; ++i) {
-      m_kmerList[i] = other.m_kmerList[i];
-    }
+    other.m_kmerList = nullptr;
   }
 
   virtual ~KmerCollection() {
-    delete[] m_kmerList;
+    if(m_kmerList) {
+      delete[] m_kmerList;
+    }
   }
 
   KmerCollection::iterator begin() {
+    if(m_kmerList == nullptr) {
+      uint_fast64_t (KmerCollection::*)(const char*) fun;
+      switch(m_kmerSize) {
+        case 8: fun = generateKmers8; break;
+        default: fun = generateKmersN; break;
+      }
+
+      m_kmerList = new uint_fast64_t[m_kmerListSize];
+      const char* ptr = m_seqEntry.data();
+
+      for(int i = 0; i < m_kmerListSize; ++i) {
+        m_kmerList[i] = generateKmersN(&(ptr[i]));
+      }
+    }
     return KmerIterator(this, 0);
   }
 
@@ -147,17 +160,17 @@ class KmerCollection {
   }
 
   // This assumes the next N chars is readable
-  inline uint_fast64_t generateKmersN(const char* ptr, int n) {
+  inline uint_fast64_t generateKmersN(const char* ptr) {
     uint_fast64_t kmer = (ptr[0] >> 1) & 3;
-    for(int i = 1; i < n; ++i) {
-      kmer |= (ptr[i] & 6) << (n*2-1);
+    for(int i = 1; i < m_kmerSize; ++i) {
+      kmer |= (ptr[i] & 6) << (i*2-1);
     }
     return 0;
   }
 
  private:
   const std::string* m_seqEntry; // TODO: change string to SeqEntry class
-  int m_kmerSize;
+  int m_kmerSize; // K
   int m_stepSize;
   int m_scoreMin;
 
