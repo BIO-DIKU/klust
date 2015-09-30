@@ -23,57 +23,101 @@
 Sequence::Sequence(const std::string& sequence,
                    const std::string& comment,
                    int lineNumber) :
-    m_sequence(sequence),
-    m_comment(comment),
-    m_lineNumber(lineNumber),
-    m_kmers(nullptr),
-    m_kmersSize(0)
+  m_sequence(sequence),
+  m_comment(comment),
+  m_lineNumber(lineNumber),
+  m_kmers(nullptr),
+  m_kmersSize(0)
 {
 }
 
 Sequence::Sequence(const Sequence& other) :
-    m_sequence(other.m_sequence),
-    m_comment(other.m_comment),
-    m_lineNumber(other.m_lineNumber)
+  m_sequence(other.m_sequence),
+  m_comment(other.m_comment),
+  m_lineNumber(other.m_lineNumber)
 {
-    m_kmersSize = other.m_kmersSize;
-    m_kmers = new KmerType[m_kmersSize];
+  m_kmersSize = other.m_kmersSize;
+  m_kmers = new KmerType[m_kmersSize];
 
-    for(int i = 0; i < m_kmersSize; ++i) {
-        m_kmers[i] = other.m_kmers[i];
-    }
+  for(int i = 0; i < m_kmersSize; ++i) {
+    m_kmers[i] = other.m_kmers[i];
+  }
 }
 
 Sequence::Sequence(Sequence&& other) noexcept :
-    m_sequence(std::move(other.m_sequence)),
-    m_comment(std::move(other.m_comment)),
-    m_lineNumber(std::move(other.m_lineNumber)),
-    m_kmers(std::move(other.m_kmers)),
-    m_kmersSize(std::move(other.m_kmersSize))
+  m_sequence(std::move(other.m_sequence)),
+  m_comment(std::move(other.m_comment)),
+  m_lineNumber(std::move(other.m_lineNumber)),
+  m_kmers(std::move(other.m_kmers)),
+  m_kmersSize(std::move(other.m_kmersSize))
 {
 }
 
 Sequence& Sequence::operator=(const Sequence& other) {
-    if(this != &other) {
-        m_sequence = other.m_sequence;
-        m_comment = other.m_comment;
-        m_lineNumber = other.m_lineNumber;
-        m_kmersSize = other.m_kmersSize;
-        m_kmers = new KmerType[m_kmersSize];
+  if(this != &other) {
+    m_sequence = other.m_sequence;
+    m_comment = other.m_comment;
+    m_lineNumber = other.m_lineNumber;
+    m_kmersSize = other.m_kmersSize;
+    m_kmers = new KmerType[m_kmersSize];
 
-        for(int i = 0; i < m_kmersSize; ++i) {
-            m_kmers[i] = other.m_kmers[i];
-        }
+    for(int i = 0; i < m_kmersSize; ++i) {
+      m_kmers[i] = other.m_kmers[i];
     }
-    return *this;
+  }
+  return *this;
 }
 
 Sequence::~Sequence() {
-    if(m_kmers) {
-        delete[] m_kmers;
-    }
+  if(m_kmers) {
+    delete[] m_kmers;
+  }
 }
 
 bool Sequence::kmersGenerated() const {
-    return m_kmers;
+  return m_kmers;
+}
+
+const std::string& Sequence::getSequence() const {
+  return m_sequence;
+}
+
+std::string& Sequence::getSequence() {
+  return m_sequence;
+}
+
+void Sequence::setSequence(const std::string& str) {
+  m_sequence = str;
+}
+
+const std::string& Sequence::getComment() const {
+  return m_comment;
+}
+
+std::string& Sequence::getComment() {
+  return m_comment;
+}
+
+void Sequence::setComment(const std::string& str) {
+  m_comment = str;
+}
+
+int Sequence::getLineNumber() const {
+  return m_lineNumber;
+}
+
+void Sequence::setLineNumber(int lineNumber) {
+  m_lineNumber = lineNumber;
+}
+
+const KmerType* Sequence::getKmer() const {
+  return m_kmers;
+}
+
+KmerType* Sequence::getKmer() {
+  return m_kmers;
+}
+
+int Sequence::getKmersNum() const {
+  return m_kmersSize;
 }

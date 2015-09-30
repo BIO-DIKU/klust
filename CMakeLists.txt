@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 2.8)
 # About the project
 # ------------------------
 # Project name
-project(BIO-DIKU-klust)
+project(klust)
 
 
 # Options
@@ -46,10 +46,7 @@ endif()
 FIND_PATH(CATCH_INCLUDE_PATH
     catch.hpp
     PATHS
-        ${CMAKE_SOURCE_DIR}/contrib
-        /usr/local/include/catch
-        /usr/local/include
-        /usr/include
+        ${CMAKE_SOURCE_DIR}/test
 )
 
 # Executable

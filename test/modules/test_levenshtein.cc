@@ -18,14 +18,27 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_MODULES_NAIVE_CLUST_H
-#define SRC_MODULES_NAIVE_CLUST_H
+#include <catch.hpp>
+#include <string>
 
-#include "../interface_clust.h"
+#include "../../src/modules/levenshtein.cc"
 
-class NaiveClust : public InterfaceClust {
- public:
-  int addSequence(Sequence& seq);
-};
+TEST_CASE("Levenshtein returns a correct result after comparison", "[levenshtein]") {
+  Sequence t1, t2;
+  LevenshteinDistance compare;
+  compare.setIdentity(0.05f);
 
-#endif // SRC_MODULES_NAIVE_CLUST_H
+  SECTION("Compare two equal strings") {
+    t1.setSequence("acgtagcgcggctatagcgcataaatcgctctagcgctatcttcgggttagca");
+    t2.setSequence("acgtagcgcggctatagcgcataaatcgctctagcgctatcttcgggttagca");
+
+    REQUIRE(compare.compare(&t1, &t2) == true);
+  }
+
+  SECTION("Compare two very different strings") {
+    t1.setSequence("acgtagcgcggctatagcgcataaatcgctctagcgctatcttcgggttagca");
+    t2.setSequence("ggatcctcatagcggctattgcgaaaagctatttcgcggccctagcga");
+
+    REQUIRE(compare.compare(&t1, &t2) == false);
+  }
+}

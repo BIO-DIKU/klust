@@ -21,5 +21,5 @@
 #include "naive_clust.h"
 
 int NaiveClust::addSequence(Sequence&) {
-    return 0;
+  return 0;
 }

@@ -18,14 +18,17 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_MODULES_NAIVE_CLUST_H
-#define SRC_MODULES_NAIVE_CLUST_H
+#ifndef SRC_MODULES_LEVENSHTEIN_H
+#define SRC_MODULES_LEVENSHTEIN_H
 
-#include "../interface_clust.h"
+#include <string>
 
-class NaiveClust : public InterfaceClust {
+#include "../sequence.h"
+#include "../interface_compare.h"
+
+class LevenshteinDistance : public InterfaceCompare {
  public:
-  int addSequence(Sequence& seq);
+  bool compare(Sequence* seq1, Sequence* seq2);
 };
 
-#endif // SRC_MODULES_NAIVE_CLUST_H
+#endif // SRC_MODULES_LEVENSHTEIN_H
