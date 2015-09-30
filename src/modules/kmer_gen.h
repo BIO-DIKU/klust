@@ -18,12 +18,14 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_DEFINES_H_
-#define SRC_DEFINES_H_
+#ifndef SRC_MODULE_KMERGEN_H_
+#define SRC_MODULE_KMERGEN_H_
 
-#include <stddef.h>
-#include <cstdint>
+#include "../interface_kmergen.h"
 
-typedef uint_fast64_t KmerType;
+class KmerGen : public InterfaceKmergen {
+  public:
+    void generateKmers(Sequence& seq);
+};
 
-#endif // SRC_DEFINES_H_
+#endif // SRC_MODULE_KMERGEN_H_

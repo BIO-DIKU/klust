@@ -24,8 +24,17 @@
 #include "sequence.h"
 
 class InterfaceKmergen {
- public:
-  virtual void generateKmers(Sequence& seq) = 0;
+  public:
+    virtual void generateKmers(Sequence& seq) = 0;
+
+  public:
+    InterfaceKmergen() { m_k = 8; }
+
+  uint_fast32_t getK() const { return m_k; }
+  void setK(uint_fast32_t k) { m_k = k; }
+
+  private:
+    uint_fast32_t m_k;
 };
 
 #endif // SRC_INTERFACE_KMERGEN_H

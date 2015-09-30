@@ -18,12 +18,21 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_DEFINES_H_
-#define SRC_DEFINES_H_
+#include "kmer_gen.h"
 
-#include <stddef.h>
-#include <cstdint>
+#include <string>
 
-typedef uint_fast64_t KmerType;
+void KmerGen::generateKmers(Sequence& seq) {
+  std::string& str = seq.m_sequence;
+  const char* ptr = str.data();
+  unsigned int kmerNum = str.size() - getK();
 
-#endif // SRC_DEFINES_H_
+  if(seq.m_kmers) {
+    delete[] seq.m_kmers;
+  }
+  seq.m_kmers = new KmerType[kmerNum];
+
+  for(unsigned int i; i < kmerNum; ++i) {
+    seq.m_kmers[i] = ((const KmerType*)ptr)[i];
+  }
+}
