@@ -30,7 +30,7 @@ class InterfaceClust {
   /**
    * Returns positive value if seq must be written to file
    */
-  virtual int addSequence(Sequence& seq) = 0;
+  virtual int addSequence(SeqEntry& seq) = 0;
 
   void setCompare(InterfaceCompare* compare) { m_compare = compare; }
   void setKmergen(InterfaceKmergen* kmergen) { m_kmergen = kmergen; }

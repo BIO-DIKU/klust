@@ -25,7 +25,7 @@
 
 class InterfaceKmergen {
  public:
-  virtual void generateKmers(Sequence& seq) = 0;
+  virtual void generateKmers(SeqEntry& seq) = 0;
 };
 
 #endif // SRC_INTERFACE_KMERGEN_H
