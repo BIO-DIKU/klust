@@ -145,6 +145,11 @@ class KmerCollection {
             return kmer;
         }
 
+        // This assumes the next N chars is readable
+        inline uint_fast64_t generateKmersN(const char*, int) {
+            return 0;
+        }
+
     private:
         const std::string* m_seqEntry; // TODO: change string to SeqEntry class
         int m_kmerSize;
