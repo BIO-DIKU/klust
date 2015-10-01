@@ -18,17 +18,22 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_MODULES_LEVENSHTEIN_H
-#define SRC_MODULES_LEVENSHTEIN_H
+#include "kmer_gen.h"
 
 #include <string>
 
-#include "../seq_entry.h"
-#include "../interface_compare.h"
+/*void KmerGen::generateKmers(SeqEntry& seq) {
+  const std::string& str = seq.seq();
+  const char* ptr = str.data();
+  size_t kmerNum = str.size() - getK();
 
-class LevenshteinDistance : public InterfaceCompare {
- public:
-  bool compare(SeqEntry* seq1, SeqEntry* seq2);
-};
+  if (seq.m_kmers) {
+    delete[] seq.m_kmers;
+  }
 
-#endif // SRC_MODULES_LEVENSHTEIN_H
+  seq.m_kmers = new KmerType[kmerNum];
+
+  for (size_t i = 0; i < kmerNum; ++i) {
+    seq.m_kmers[i] = ((const KmerType*)ptr)[i];
+  }
+}*/

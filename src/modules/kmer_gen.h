@@ -18,17 +18,14 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_MODULES_LEVENSHTEIN_H
-#define SRC_MODULES_LEVENSHTEIN_H
+#ifndef SRC_MODULE_KMERGEN_H_
+#define SRC_MODULE_KMERGEN_H_
 
-#include <string>
+#include "../interface_kmergen.h"
 
-#include "../seq_entry.h"
-#include "../interface_compare.h"
-
-class LevenshteinDistance : public InterfaceCompare {
- public:
-  bool compare(SeqEntry* seq1, SeqEntry* seq2);
+class KmerGen : public InterfaceKmergen {
+  public:
+    void generateKmers(SeqEntry& seq);
 };
 
-#endif // SRC_MODULES_LEVENSHTEIN_H
+#endif // SRC_MODULE_KMERGEN_H_

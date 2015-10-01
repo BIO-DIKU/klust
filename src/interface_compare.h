@@ -21,7 +21,7 @@
 #ifndef SRC_INTERFACE_COMPARE_H
 #define SRC_INTERFACE_COMPARE_H
 
-#include "sequence.h"
+#include "seq_entry.h"
 
 class InterfaceCompare {
  public:

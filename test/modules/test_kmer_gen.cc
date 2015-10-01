@@ -18,17 +18,6 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_MODULES_LEVENSHTEIN_H
-#define SRC_MODULES_LEVENSHTEIN_H
+#include <catch.hpp>
 
-#include <string>
-
-#include "../seq_entry.h"
-#include "../interface_compare.h"
-
-class LevenshteinDistance : public InterfaceCompare {
- public:
-  bool compare(SeqEntry* seq1, SeqEntry* seq2);
-};
-
-#endif // SRC_MODULES_LEVENSHTEIN_H
+#include "../../src/modules/kmer_gen.cc"

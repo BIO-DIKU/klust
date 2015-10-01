@@ -18,7 +18,7 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#include "sequence.h"
+#include "seq_entry.h"
 
 SeqEntry::SeqEntry() : type_(SeqType::nucleotide) {
 }

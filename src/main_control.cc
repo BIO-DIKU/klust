@@ -23,15 +23,15 @@
 MainControl::MainControl() :
   m_reader(new FastaReader()),
   m_writer(new FastaWriter()),
-  m_identity(0.9f)
-{
+  m_identity(0.9f) {
   m_writer->openCoutWriter();
 }
 
 MainControl::~MainControl() {
-  if(m_reader)
+  if (m_reader)
     delete m_reader;
-  if(m_writer)
+
+  if (m_writer)
     delete m_writer;
 }
 
@@ -41,7 +41,7 @@ MainControl* MainControl::instance() {
 }
 
 int MainControl::run() {
-  if(m_compare == nullptr || m_clust == nullptr || m_kmergen == nullptr) {
+  if (m_compare == nullptr || m_clust == nullptr || m_kmergen == nullptr) {
     return EXIT_FAILURE;
   }
 
@@ -49,9 +49,9 @@ int MainControl::run() {
   m_clust->setCompare(m_compare);
   m_clust->setKmergen(m_kmergen);
 
-  Sequence seq;
-  while(!m_reader->getNextLine(seq)) {
-    if(m_clust->addSequence(seq) > 0) {
+  SeqEntry seq;
+  while (!m_reader->getNextLine(seq)) {
+    if (m_clust->addSequence(seq) > 0) {
       m_writer->write(seq);
     }
   }

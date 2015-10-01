@@ -24,7 +24,7 @@
 #include <fstream>
 #include <string>
 
-#include "sequence.h"
+#include "seq_entry.h"
 
 class FastaReader {
  public:
@@ -37,7 +37,7 @@ class FastaReader {
   int openReader(const std::string& filename);
   void closeReader();
 
-  int getNextLine(Sequence& seq);
+  int getNextLine(SeqEntry& seq);
 
  private:
   std::ifstream* m_reader;

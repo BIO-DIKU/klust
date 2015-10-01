@@ -21,11 +21,19 @@
 #ifndef SRC_INTERFACE_KMERGEN_H
 #define SRC_INTERFACE_KMERGEN_H
 
-#include "sequence.h"
+#include "seq_entry.h"
 
 class InterfaceKmergen {
  public:
   virtual void generateKmers(SeqEntry& seq) = 0;
+
+  InterfaceKmergen() { m_k = 8; }
+
+  uint_fast32_t getK() const { return m_k; }
+  void setK(uint_fast32_t k) { m_k = k; }
+
+ private:
+  uint_fast32_t m_k;
 };
 
 #endif // SRC_INTERFACE_KMERGEN_H

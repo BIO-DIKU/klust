@@ -20,7 +20,7 @@
 
 #include "levenshtein.h"
 
-#include "../sequence.h"
+#include "../seq_entry.h"
 
 #define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
 

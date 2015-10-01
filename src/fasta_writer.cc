@@ -65,9 +65,9 @@ void FastaWriter::closeWriter() {
   }
 }
 
-int FastaWriter::write(const Sequence& seq) {
+int FastaWriter::write(const SeqEntry& seq) {
   if(m_writeStream) {
-    *m_writeStream << seq.m_sequence;
+    *m_writeStream << seq.seq();
     return 0;
   }
   return -1;

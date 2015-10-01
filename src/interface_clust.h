@@ -21,7 +21,7 @@
 #ifndef SRC_INTERFACE_CLUST_H
 #define SRC_INTERFACE_CLUST_H
 
-#include "sequence.h"
+#include "seq_entry.h"
 #include "interface_compare.h"
 #include "interface_kmergen.h"
 
