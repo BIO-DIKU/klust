@@ -22,22 +22,18 @@
 #define KLUST_SEQUENCE_H_
 
 #include <string>
+#include <vector>
 
 class SeqEntry {
  public:
   enum class SeqType {
-    rna,
-    dna,
-    protein,
-    unknown   // TODO
+    nucleotide,
+    protein
   };
 
   SeqEntry();
   SeqEntry(const std::string& name, const std::string& sequence,
-           const std::string& scores, SeqEntry::SeqType sequence_type);
-
-  std::string ToFasta() const;
-  std::string ToFastq() const;
+           const std::vector<uint8_t>& scores, SeqEntry::SeqType sequence_type);
 
   /*
    * Returns a SeqEntry containing the (consecutive) subsequence of the
@@ -47,21 +43,21 @@ class SeqEntry {
   SeqEntry SubSeq(int i, int len) const;
 
   // accessors
-  const std::string& seq_name() const { return seq_name_; }
+  const std::string& name() const { return name_; }
   const std::string& seq() const { return seq_; }
-  const std::string& scores() const { return scores_; }
+  const std::vector<uint8_t>& scores() const { return scores_; }
   SeqType type() const { return type_; }
 
   // mutators
-  void set_seq_name(const std::string& name) { seq_name_ = name; }
+  void set_name(const std::string& name) { name_ = name; }
   void set_seq(const std::string& sequence) { seq_ = sequence; }
-  void set_scores(const std::string& scores) { scores_ = scores; }
+  void set_scores(const std::vector<uint8_t>& scores) { scores_ = scores; }
   void set_type(SeqType type) { type_ = type; }
 
  private:
-  std::string seq_name_;
+  std::string name_;
   std::string seq_;
-  std::string scores_;
+  std::vector<uint8_t> scores_;
   SeqType type_;
 };
 
