@@ -49,7 +49,7 @@ int MainControl::run() {
   m_clust->setCompare(m_compare);
   m_clust->setKmergen(m_kmergen);
 
-  Sequence seq;
+  SeqEntry seq;
   while (!m_reader->getNextLine(seq)) {
     if (m_clust->addSequence(seq) > 0) {
       m_writer->write(seq);

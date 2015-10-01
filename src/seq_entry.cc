@@ -18,14 +18,19 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_MODULES_NAIVE_CLUST_H
-#define SRC_MODULES_NAIVE_CLUST_H
+#include "seq_entry.h"
 
-#include "../interface_clust.h"
+SeqEntry::SeqEntry() : type_(SeqType::nucleotide) {
+}
 
-class NaiveClust : public InterfaceClust {
- public:
-  int addSequence(SeqEntry& seq);
-};
+SeqEntry::SeqEntry(const std::string& name, const std::string& sequence,
+                   const std::vector<uint8_t>& scores, SeqEntry::SeqType sequence_type)
+    : name_(name),
+      seq_(sequence),
+      scores_(scores),
+      type_(sequence_type) {
+}
 
-#endif // SRC_MODULES_NAIVE_CLUST_H
+SeqEntry SeqEntry::SubSeq(int i, int len) const {
+  return SeqEntry(name(), seq().substr(i, len), scores(), type());
+}

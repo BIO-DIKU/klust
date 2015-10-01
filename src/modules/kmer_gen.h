@@ -25,7 +25,7 @@
 
 class KmerGen : public InterfaceKmergen {
   public:
-    void generateKmers(Sequence& seq);
+    void generateKmers(SeqEntry& seq);
 };
 
 #endif // SRC_MODULE_KMERGEN_H_

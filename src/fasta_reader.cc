@@ -56,17 +56,18 @@ void FastaReader::closeReader() {
   m_nextLineNumber = 0;
 }
 
-int FastaReader::getNextLine(Sequence& seq) {
+int FastaReader::getNextLine(SeqEntry& seq) {
   if (m_reader == nullptr) {
     return -2;
   }
 
   if (m_readComment.size() > 0) {
-    seq.m_comment = std::string(m_readComment, 1);
+    seq.set_name(m_readComment);
   } else {
-    seq.m_comment = "";
+    seq.set_name("");
   }
 
+  /* FIXME
   seq.m_sequence = "";
   seq.m_lineNumber = 0;
 
@@ -82,7 +83,7 @@ int FastaReader::getNextLine(Sequence& seq) {
     } else {
       return 0;
     }
-  }
+  }*/
 
   return -1;
 }

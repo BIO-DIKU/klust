@@ -21,11 +21,11 @@
 #ifndef SRC_INTERFACE_COMPARE_H
 #define SRC_INTERFACE_COMPARE_H
 
-#include "sequence.h"
+#include "seq_entry.h"
 
 class InterfaceCompare {
  public:
-  virtual bool compare(Sequence* seq1, Sequence* seq2) = 0;
+  virtual bool compare(SeqEntry* seq1, SeqEntry* seq2) = 0;
 
   void setIdentity(float id) { m_identity = id; }
   float getIdentity() const { return m_identity; }

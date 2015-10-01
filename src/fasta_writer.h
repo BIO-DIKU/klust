@@ -24,7 +24,7 @@
 #include <iostream>
 #include <string>
 
-#include "sequence.h"
+#include "seq_entry.h"
 
 class FastaWriter {
  public:
@@ -39,7 +39,7 @@ class FastaWriter {
 
   void closeWriter();
 
-  int write(const Sequence& seq); // TODO
+  int write(const SeqEntry& seq); // TODO
 
  private:
   std::ofstream* m_writeFileStream;

@@ -21,7 +21,7 @@
 #ifndef SRC_INTERFACE_CLUST_H
 #define SRC_INTERFACE_CLUST_H
 
-#include "sequence.h"
+#include "seq_entry.h"
 #include "interface_compare.h"
 #include "interface_kmergen.h"
 
@@ -30,7 +30,7 @@ class InterfaceClust {
   /**
    * Returns positive value if seq must be written to file
    */
-  virtual int addSequence(Sequence& seq) = 0;
+  virtual int addSequence(SeqEntry& seq) = 0;
 
   void setCompare(InterfaceCompare* compare) { m_compare = compare; }
   void setKmergen(InterfaceKmergen* kmergen) { m_kmergen = kmergen; }
