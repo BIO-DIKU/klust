@@ -1,15 +1,15 @@
-SILVA_FTP=ftp://ftp.arb-silva.de/release_123/Exports/
-SILVA_FILE=SILVA_123_SSURef_tax_silva_trunc.fasta.gz
-SILVA_DIR=silva
+SILVA_FTP=ftp://ftp.arb-silva.de/release_123/Exports/SILVA_123_SSURef_tax_silva_trunc.fasta.gz
+SILVA_LOCAL=silva/$(notdir $(SILVA_FTP))
+SILVA_UNPACKED=$(subst .gz,,$(SILVA_LOCAL))
 
-all: download unpack
+all: $(SILVA_UNPACKED)
 
-download:
-	wget -P $(SILVA_DIR) $(SILVA_FTP)/$(SILVA_FILE)
-	touch $@
+$(SILVA_LOCAL):
+	wget -O $(SILVA_LOCAL) $(SILVA_FTP)
 
-unpack:
-	gunzip $(SILVA_DIR)/$(SILVA_FILE)
+$(SILVA_UNPACKED): $(SILVA_LOCAL)
+	gunzip -k $(SILVA_LOCAL)
 
 clean:
-	rm $(SILVA_DIR)/$(SILVA_FILE)
+	rm -f $(SILVA_UNPACKED)
+	@echo "Make refrained from removing $(SILVA_LOCAL). Remove this manually"
