@@ -18,21 +18,60 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
+#define A_ "00"
+#define C_ "01"
+#define G_ "11"
+#define T_ "10"
+
 #include <catch.hpp>
 
 #include "../src/kmer_collection.h"
 
-#include <string>
+#include <bitset>
 #include <memory>
+#include <string>
 
 TEST_CASE("Basic functionalities of kmer_collection", "[kmer_collection]") {
-    std::shared_ptr<std::string> p = std::make_shared<std::string>("caaatcgcgggatttcgaaactatggg");
-    KmerCollection collection(p, 8, 1);
+  std::shared_ptr<std::string> p = std::make_shared<std::string>("caaatcgcgggatttcgaaactatggg");
+  KmerCollection collection(p, 8, 1);
 
-    SECTION("Begin not equal end") {
-        auto itBegin = collection.begin();
-        auto itEnd = collection.end();
+  auto itBegin = collection.begin();
+  auto itEnd = collection.end();
 
-        REQUIRE(itBegin != itEnd);
-    }
+  SECTION("Begin not equal end") {
+    REQUIRE(itBegin != itEnd);
+  }
+
+  SECTION("comparison for equality") {
+    REQUIRE(itBegin == itBegin);
+    REQUIRE(itEnd == itEnd);
+  }
+}
+
+TEST_CASE("Basic KmerIterator functionality for k = 8", "[kmer_collection]") {
+  std::shared_ptr<std::string> p = std::make_shared<std::string>("caaatcgcgggatttcgaaactatggg");
+  KmerCollection collection(p, 5, 1);
+
+  auto it = collection.begin();
+
+  SECTION("KmerIterator can be incremented and decremented") {
+    REQUIRE(*it == (std::bitset<64>(T_ A_ A_ A_ C_)).to_ulong());
+    ++it;
+    REQUIRE(*it == (std::bitset<64>(C_ T_ A_ A_ A_)).to_ulong());
+    ++it;
+    REQUIRE(*it == (std::bitset<64>(G_ C_ T_ A_ A_)).to_ulong());
+    ++it;
+    REQUIRE(*it == (std::bitset<64>(C_ G_ C_ T_ A_)).to_ulong());
+    ++it;
+    REQUIRE(*it == (std::bitset<64>(G_ C_ G_ C_ T_)).to_ulong());
+
+    --it;
+    REQUIRE(*it == (std::bitset<64>(C_ G_ C_ T_ A_)).to_ulong());
+    --it;
+    REQUIRE(*it == (std::bitset<64>(G_ C_ T_ A_ A_)).to_ulong());
+    --it;
+    REQUIRE(*it == (std::bitset<64>(C_ T_ A_ A_ A_)).to_ulong());
+    --it;
+    REQUIRE(*it == (std::bitset<64>(T_ A_ A_ A_ C_)).to_ulong());
+  }
 }
