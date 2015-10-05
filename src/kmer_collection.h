@@ -26,6 +26,8 @@
 #include <iterator>
 #include <memory>
 
+#include "seq_entry.h"
+
 class KmerCollection {
 
   class KmerIterator : public std::iterator<std::bidirectional_iterator_tag, uint_fast64_t>
@@ -100,14 +102,14 @@ class KmerCollection {
   KmerCollection(const KmerCollection&) = delete;
   KmerCollection& operator=(const KmerCollection&) = delete;
 
-  KmerCollection(const std::shared_ptr<std::string> seqEntry,
+  KmerCollection(const std::shared_ptr<SeqEntry> seqEntry,
                  int kmerSize, int scoreMin,
                  int stepSize = 1, bool compressHint = true) :
     m_seqEntry(seqEntry),
     m_kmerSize(kmerSize),
     m_stepSize(scoreMin),
     m_scoreMin(stepSize),
-    m_kmerListSize(seqEntry->size() - kmerSize + 1),
+    m_kmerListSize(seqEntry->seq().size() - kmerSize + 1),
     m_kmerList(nullptr),
     m_usedGenerator(&KmerCollection::generateKmersN),
     m_compress(compressHint)
@@ -139,7 +141,7 @@ class KmerCollection {
       chooseGenerator();
 
       m_kmerList = new uint_fast64_t[m_kmerListSize];
-      const char* ptr = m_seqEntry->data();
+      const char* ptr = m_seqEntry->seq().data();
 
       for(int i = 0; i < m_kmerListSize; ++i) {
         m_kmerList[i] = (this->*m_usedGenerator)(&(ptr[i]));
@@ -195,7 +197,7 @@ class KmerCollection {
   }
 
  private:
-  const std::shared_ptr<std::string> m_seqEntry; // TODO: change string to SeqEntry class
+  const std::shared_ptr<SeqEntry> m_seqEntry;
   int m_kmerSize; // K
   int m_stepSize;
   int m_scoreMin;

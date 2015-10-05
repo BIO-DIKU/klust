@@ -32,7 +32,8 @@
 #include <string>
 
 TEST_CASE("Basic functionalities of kmer_collection", "[kmer_collection]") {
-  std::shared_ptr<std::string> p = std::make_shared<std::string>("caaatcgcgggatttcgaaactatggg");
+  SeqEntry s("name", "caaatcgcgggatttcgaaactatggg", {}, SeqEntry::SeqType::nucleotide);
+  std::shared_ptr<SeqEntry> p = std::make_shared<SeqEntry>(s);
   KmerCollection collection(p, 8, 1);
 
   auto itBegin = collection.begin();
@@ -48,8 +49,9 @@ TEST_CASE("Basic functionalities of kmer_collection", "[kmer_collection]") {
   }
 }
 
-TEST_CASE("Basic KmerIterator functionality for k = 8", "[kmer_collection]") {
-  std::shared_ptr<std::string> p = std::make_shared<std::string>("caaatcgcgggatttcgaaactatggg");
+TEST_CASE("Basic KmerIterator functionality for k = 5", "[kmer_collection]") {
+  SeqEntry s("name", "caaatcgcgggatttcgaaactatggg", {}, SeqEntry::SeqType::nucleotide);
+  std::shared_ptr<SeqEntry> p = std::make_shared<SeqEntry>(s);
   KmerCollection collection(p, 5, 1);
 
   auto it = collection.begin();
