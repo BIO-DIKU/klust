@@ -20,6 +20,6 @@
 
 #include "naive_clust.h"
 
-int NaiveClust::addSequence(Sequence&) {
-    return 0;
+int NaiveClust::addSequence(SeqEntry&) {
+  return 0;
 }

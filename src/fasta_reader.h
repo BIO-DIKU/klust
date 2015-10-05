@@ -24,25 +24,25 @@
 #include <fstream>
 #include <string>
 
-#include "sequence.h"
+#include "seq_entry.h"
 
 class FastaReader {
-    public:
-        FastaReader(const FastaReader&) = delete;
-        FastaReader& operator=(const FastaReader&) = delete;
+ public:
+  FastaReader(const FastaReader&) = delete;
+  FastaReader& operator=(const FastaReader&) = delete;
 
-        FastaReader();
-        virtual ~FastaReader();
+  FastaReader();
+  virtual ~FastaReader();
 
-        int openReader(const std::string& filename);
-        void closeReader();
+  int openReader(const std::string& filename);
+  void closeReader();
 
-        int getNextLine(Sequence& seq);
+  int getNextLine(SeqEntry& seq);
 
-    private:
-        std::ifstream* m_reader;
-        std::string m_readComment;
-        int m_nextLineNumber;
+ private:
+  std::ifstream* m_reader;
+  std::string m_readComment;
+  int m_nextLineNumber;
 };
 
 #endif // SRC_FASTA_READER_H_

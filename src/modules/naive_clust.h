@@ -24,8 +24,8 @@
 #include "../interface_clust.h"
 
 class NaiveClust : public InterfaceClust {
-    public:
-        int addSequence(Sequence& seq);
+ public:
+  int addSequence(SeqEntry& seq);
 };
 
 #endif // SRC_MODULES_NAIVE_CLUST_H
