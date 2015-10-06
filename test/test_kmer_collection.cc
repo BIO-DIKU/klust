@@ -49,31 +49,30 @@ TEST_CASE("Basic functionalities of kmer_collection", "[kmer_collection]") {
   }
 }
 
-TEST_CASE("Basic KmerIterator functionality for k = 5", "[kmer_collection]") {
-  SeqEntry s("name", "caaatcgcgggatttcgaaactatggg", {}, SeqEntry::SeqType::nucleotide);
+TEST_CASE("Basic KmerIterator functionality for k = 3", "[kmer_collection]") {
+  SeqEntry s("name", "ctgta", {}, SeqEntry::SeqType::nucleotide);
   std::shared_ptr<SeqEntry> p = std::make_shared<SeqEntry>(s);
-  KmerCollection collection(p, 5, 1);
+  KmerCollection collection(p, 3, 1);
 
   auto it = collection.begin();
 
-  SECTION("KmerIterator can be incremented and decremented") {
-    REQUIRE(*it == (std::bitset<64>(T_ A_ A_ A_ C_)).to_ulong());
+  SECTION("KmerIterator can be {in,de}cremented until reaching {end,begin}") {
+    REQUIRE(*it == (std::bitset<64>(G_ T_ C_)).to_ulong());
     ++it;
-    REQUIRE(*it == (std::bitset<64>(C_ T_ A_ A_ A_)).to_ulong());
+    REQUIRE(*it == (std::bitset<64>(T_ G_ T_)).to_ulong());
     ++it;
-    REQUIRE(*it == (std::bitset<64>(G_ C_ T_ A_ A_)).to_ulong());
+    REQUIRE(*it == (std::bitset<64>(A_ T_ G_)).to_ulong());
     ++it;
-    REQUIRE(*it == (std::bitset<64>(C_ G_ C_ T_ A_)).to_ulong());
-    ++it;
-    REQUIRE(*it == (std::bitset<64>(G_ C_ G_ C_ T_)).to_ulong());
+
+    REQUIRE(it == collection.end());
 
     --it;
-    REQUIRE(*it == (std::bitset<64>(C_ G_ C_ T_ A_)).to_ulong());
+    REQUIRE(*it == (std::bitset<64>(A_ T_ G_)).to_ulong());
     --it;
-    REQUIRE(*it == (std::bitset<64>(G_ C_ T_ A_ A_)).to_ulong());
+    REQUIRE(*it == (std::bitset<64>(T_ G_ T_)).to_ulong());
     --it;
-    REQUIRE(*it == (std::bitset<64>(C_ T_ A_ A_ A_)).to_ulong());
-    --it;
-    REQUIRE(*it == (std::bitset<64>(T_ A_ A_ A_ C_)).to_ulong());
+    REQUIRE(*it == (std::bitset<64>(G_ T_ C_)).to_ulong());
+
+    REQUIRE(it == collection.begin());
   }
 }
