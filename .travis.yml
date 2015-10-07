@@ -1,0 +1,6 @@
+language: cpp
+compiler:
+    - clang
+    - gcc
+install: cmake -DCMAKE_BUILD_TYPE . && make
+script: ./klust-test
