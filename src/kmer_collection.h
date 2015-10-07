@@ -18,8 +18,8 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_KMER_COLLECTION_H_
-#define SRC_KMER_COLLECTION_H_
+#ifndef KLUST_KMER_COLLECTION_H_
+#define KLUST_KMER_COLLECTION_H_
 
 #include <string>
 #include <cstdint>
@@ -209,4 +209,4 @@ class KmerCollection {
   bool m_compress;
 };
 
-#endif // SRC_KMER_COLLECTION_H_
+#endif // KLUST_KMER_COLLECTION_H_
