@@ -18,8 +18,8 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef KLUST_SEQUENCE_H_
-#define KLUST_SEQUENCE_H_
+#ifndef KLUST_SEQ_ENTRY_H_
+#define KLUST_SEQ_ENTRY_H_
 
 #include <string>
 #include <vector>
@@ -61,4 +61,4 @@ class SeqEntry {
   SeqType type_;
 };
 
-#endif // KLUST_SEQUENCE_H_
+#endif // KLUST_SEQ_ENTRY_H_

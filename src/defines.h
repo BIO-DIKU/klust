@@ -18,12 +18,12 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_DEFINES_H_
-#define SRC_DEFINES_H_
+#ifndef KLUST_DEFINES_H_
+#define KLUST_DEFINES_H_
 
 #include <stddef.h>
 #include <cstdint>
 
 typedef uint_fast64_t KmerType;
 
-#endif // SRC_DEFINES_H_
+#endif // KLUST_DEFINES_H_

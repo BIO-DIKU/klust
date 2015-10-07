@@ -18,8 +18,8 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_MODULES_NAIVE_CLUST_H
-#define SRC_MODULES_NAIVE_CLUST_H
+#ifndef KLUST_MODULES_NAIVE_CLUST_H_
+#define KLUST_MODULES_NAIVE_CLUST_H_
 
 #include "../interface_clust.h"
 
@@ -28,4 +28,4 @@ class NaiveClust : public InterfaceClust {
   int addSequence(SeqEntry& seq);
 };
 
-#endif // SRC_MODULES_NAIVE_CLUST_H
+#endif // KLUST_MODULES_NAIVE_CLUST_H_
