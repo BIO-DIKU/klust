@@ -18,8 +18,8 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_INTERFACE_COMPARE_H
-#define SRC_INTERFACE_COMPARE_H
+#ifndef KLUST_INTERFACE_COMPARE_H
+#define KLUST_INTERFACE_COMPARE_H
 
 #include "seq_entry.h"
 
@@ -34,4 +34,4 @@ class InterfaceCompare {
   float m_identity; // Similarity identity
 };
 
-#endif // SRC_INTERFACE_COMPARE_H
+#endif // KLUST_INTERFACE_COMPARE_H
