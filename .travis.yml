@@ -1,3 +1,4 @@
+# much of this configuration is based on http://stackoverflow.com/a/30925448/1866171
 sudo: false
 language: cpp
 compiler:
