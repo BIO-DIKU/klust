@@ -18,8 +18,8 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_FASTA_READER_H_
-#define SRC_FASTA_READER_H_
+#ifndef KLUST_FASTA_READER_H_
+#define KLUST_FASTA_READER_H_
 
 #include <fstream>
 #include <string>
@@ -45,4 +45,4 @@ class FastaReader {
   int m_nextLineNumber;
 };
 
-#endif // SRC_FASTA_READER_H_
+#endif // KLUST_FASTA_READER_H_
