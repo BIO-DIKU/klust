@@ -1,6 +1,16 @@
+sudo: false
 language: cpp
 compiler:
     - clang
     - gcc
-install: cmake -DCMAKE_BUILD_TYPE=Debug . && make
+install:
+- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi && cmake -DCMAKE_BUILD_TYPE=Debug . && make
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.8
+    - g++-4.8
+    - clang
 script: ./klust-test
