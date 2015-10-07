@@ -18,8 +18,8 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef KLUST_MAIN_CONTROL_H
-#define KLUST_MAIN_CONTROL_H
+#ifndef KLUST_MAIN_CONTROL_H_
+#define KLUST_MAIN_CONTROL_H_
 
 #include <string>
 
@@ -63,4 +63,4 @@ class MainControl {
   InterfaceClust* m_clust;
 };
 
-#endif // KLUST_MAIN_CONTROL_H
+#endif // KLUST_MAIN_CONTROL_H_

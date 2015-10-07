@@ -18,8 +18,8 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef KLUST_INTERFACE_CLUST_H
-#define KLUST_INTERFACE_CLUST_H
+#ifndef KLUST_INTERFACE_CLUST_H_
+#define KLUST_INTERFACE_CLUST_H_
 
 #include "seq_entry.h"
 #include "interface_compare.h"
@@ -40,4 +40,4 @@ class InterfaceClust {
   InterfaceKmergen* m_kmergen;
 };
 
-#endif // KLUST_INTERFACE_CLUST_H
+#endif // KLUST_INTERFACE_CLUST_H_
