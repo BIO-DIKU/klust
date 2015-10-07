@@ -18,8 +18,8 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef KLUST_MODULE_KMERGEN_H_
-#define KLUST_MODULE_KMERGEN_H_
+#ifndef KLUST_MODULE_KMER_GEN_H_
+#define KLUST_MODULE_KMER_GEN_H_
 
 #include "../interface_kmergen.h"
 
@@ -28,4 +28,4 @@ class KmerGen : public InterfaceKmergen {
     void generateKmers(SeqEntry& seq);
 };
 
-#endif // KLUST_MODULE_KMERGEN_H_
+#endif // KLUST_MODULE_KMER_GEN_H_
