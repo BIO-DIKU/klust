@@ -18,8 +18,8 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_INTERFACE_KMERGEN_H
-#define SRC_INTERFACE_KMERGEN_H
+#ifndef KLUST_INTERFACE_KMERGEN_H
+#define KLUST_INTERFACE_KMERGEN_H
 
 #include "seq_entry.h"
 
@@ -36,4 +36,4 @@ class InterfaceKmergen {
   uint_fast32_t m_k;
 };
 
-#endif // SRC_INTERFACE_KMERGEN_H
+#endif // KLUST_INTERFACE_KMERGEN_H
