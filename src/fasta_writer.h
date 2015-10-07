@@ -18,8 +18,8 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_FASTA_WRITER_H
-#define SRC_FASTA_WRITER_H
+#ifndef KLUST_FASTA_WRITER_H
+#define KLUST_FASTA_WRITER_H
 
 #include <iostream>
 #include <string>
@@ -46,4 +46,4 @@ class FastaWriter {
   std::ostream* m_writeStream;
 };
 
-#endif // SRC_FASTA_WRITER_H
+#endif // KLUST_FASTA_WRITER_H
