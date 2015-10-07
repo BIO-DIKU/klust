@@ -85,7 +85,7 @@ static void PrintHelp() {
   "-v --version                            Output program version.\n"
   "-V --verbose                            Enable verbose messages.\n"
   "\n"
-  "Documentation: https://github.com/BIO-DIKU/klust";
+  "Documentation: https://github.com/BIO-DIKU/klust\n";
 }
 
 static int AnalyzeInput(int argc, char *argv[]) {

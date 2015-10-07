@@ -18,8 +18,8 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef SRC_MODULES_LEVENSHTEIN_H
-#define SRC_MODULES_LEVENSHTEIN_H
+#ifndef KLUST_MODULES_LEVENSHTEIN_H_
+#define KLUST_MODULES_LEVENSHTEIN_H_
 
 #include <string>
 
@@ -31,4 +31,4 @@ class LevenshteinDistance : public InterfaceCompare {
   bool compare(SeqEntry* seq1, SeqEntry* seq2);
 };
 
-#endif // SRC_MODULES_LEVENSHTEIN_H
+#endif // KLUST_MODULES_LEVENSHTEIN_H_
