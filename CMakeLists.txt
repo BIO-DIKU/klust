@@ -41,14 +41,6 @@ elseif (${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
 endif()
 
 
-# Find Catch
-# ------------------------
-FIND_PATH(CATCH_INCLUDE_PATH
-    catch.hpp
-    PATHS
-        ${CMAKE_SOURCE_DIR}/test
-)
-
 # Executable
 # ------------------------
 FILE(GLOB SOURCE_FILES src/*.cc src/modules/*.cc)
@@ -60,11 +52,7 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
 # Build tests if CMAKE_BUILD_TYPE=Debug is set
 # ------------------------
 if (CMAKE_BUILD_TYPE MATCHES DEBUG OR CMAKE_BUILD_TYPE MATCHES "Debug")
-    if (NOT CATCH_INCLUDE_PATH)
-        MESSAGE(SEND_ERROR "Could not find file catch.hpp")
-    else()
-        include_directories(${CATCH_INCLUDE_PATH})
-        FILE(GLOB TEST_FILES test/*.cc test/modules/*.cc)
-        add_executable("${PROJECT_NAME}-test" ${TEST_FILES})
-    endif()
+    include_directories(${CATCH_INCLUDE_PATH})
+    FILE(GLOB TEST_FILES test/*.cc test/modules/*.cc)
+    add_executable("${PROJECT_NAME}-test" ${TEST_FILES})
 endif()
