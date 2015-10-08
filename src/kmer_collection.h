@@ -38,9 +38,9 @@ class KmerCollection {
     m_position(position)
     {}
 
-    KmerIterator(const KmerIterator& other, int position) :
+    KmerIterator(const KmerIterator& other) :
       m_owner(other.m_owner),
-      m_position(position)
+      m_position(other.m_position)
     {}
 
     /**
