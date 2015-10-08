@@ -47,8 +47,16 @@ bool LevenshteinDistance::compare(SeqEntry* seq1, SeqEntry* seq2) {
   float maxErrors = getIdentity() * smallestLength + lengthDiff;
 
   // degenerate cases
-  if (str1.length() == 0 && maxErrors < str2.length()) return false;
-  if (str2.length() == 0 && maxErrors < str1.length()) return false;
+  if (str1.length() == 0 && maxErrors < str2.length()) {
+    delete[] v0;
+    delete[] v1;
+    return false;
+  }
+  if (str2.length() == 0 && maxErrors < str1.length()) {
+    delete[] v0;
+    delete[] v1;
+    return false;
+  }
 
   // initialize v0 (the previous row of distances)
   // this row is A[0][i]: edit distance for an empty str1
