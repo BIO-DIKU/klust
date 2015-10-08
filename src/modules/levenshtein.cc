@@ -26,8 +26,8 @@
 #include "../utils.h"
 
 bool LevenshteinDistance::compare(SeqEntry* seq1, SeqEntry* seq2) {
-  std::string str1 = seq1->seq();
-  std::string str2 = seq2->seq();
+  const std::string& str1 = seq1->seq();
+  const std::string& str2 = seq2->seq();
 
   // return true if the two strings are the same
   if (&str1 == &str2) return true;
