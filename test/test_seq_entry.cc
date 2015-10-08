@@ -18,7 +18,7 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#include <catch.hpp>
+#include "catch.hpp"
 
 #include "../src/seq_entry.cc"
 
