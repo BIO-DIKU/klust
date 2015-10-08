@@ -43,10 +43,60 @@ TEST_CASE("Basic functionalities of kmer_collection", "[kmer_collection]") {
     REQUIRE(itBegin != itEnd);
   }
 
-  SECTION("comparison for equality") {
+  SECTION("Comparison for equality 1") {
     REQUIRE(itBegin == itBegin);
     REQUIRE(itEnd == itEnd);
   }
+
+  SECTION("Size returns correctly") {
+    REQUIRE(collection.size() == 20);
+  }
+}
+
+
+TEST_CASE("Unique kmers", "[kmer_collection]") {
+  const char ascii[] = {'a', 'c', 't', 'g'};
+
+  int ksize = 8;
+  int kmerNum = 1 << (2 * ksize);
+
+  char* str = new char[ksize * kmerNum + 1];
+  str[ksize * kmerNum] = 0;
+
+  int counter = 0;
+  for(int n = 0; n < kmerNum; ++n) {
+    int tmp = n;
+    for(int k = 0; k < ksize; ++k) {
+      str[counter++] = ascii[tmp & 3];
+      tmp >>= 2;
+    }
+  }
+
+  SeqEntry s("name", std::string(str), {}, SeqEntry::SeqType::nucleotide);
+  std::shared_ptr<SeqEntry> p = std::make_shared<SeqEntry>(s);
+  KmerCollection collection(p, ksize, 1, ksize, true);
+
+  for(int i = 0; i < kmerNum; ++i) {
+    str[i] = 0;
+  }
+
+  for(KmerCollection::iterator it = collection.begin(); it != collection.end(); ++it) {
+    str[*it]++;
+  }
+
+  int allIsCool = 0;
+  for(int i = 0; i < kmerNum; ++i) {
+    if(str[i] != 1) {
+      allIsCool++;
+    }
+  }
+
+  REQUIRE(*(collection.begin()) == 0);
+  REQUIRE(*(--collection.end()) == kmerNum-1);
+  REQUIRE(allIsCool == 0);
+
+  delete[] str;
+
 }
 
 TEST_CASE("Basic KmerIterator functionality for k = 3", "[kmer_collection]") {

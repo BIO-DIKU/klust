@@ -69,7 +69,7 @@ class KmerCollection {
     }
 
     KmerIterator operator++() {
-      m_position++;
+      ++m_position;
       return *this;
     }
 
@@ -80,7 +80,7 @@ class KmerCollection {
     }
 
     KmerIterator operator--() {
-      m_position--;
+      --m_position;
       return *this;
     }
 
@@ -107,11 +107,11 @@ class KmerCollection {
                  int stepSize = 1, bool compressHint = true) :
     m_seqEntry(seqEntry),
     m_kmerSize(kmerSize),
-    m_stepSize(scoreMin),
-    m_scoreMin(stepSize),
-    m_kmerListSize(seqEntry->seq().size() - kmerSize + 1),
+    m_stepSize(stepSize),
+    m_scoreMin(scoreMin),
+    m_kmerListSize(0),
     m_kmerList(nullptr),
-    m_usedGenerator(&KmerCollection::generateKmersN),
+    m_usedGenerator(&KmerCollection::generateKmerN),
     m_compress(compressHint)
   {
     if(m_compress == false && kmerSize > 8) {
@@ -126,9 +126,11 @@ class KmerCollection {
     m_scoreMin(std::move(other.m_scoreMin)),
     m_kmerListSize(std::move(other.m_kmerListSize)),
     m_kmerList(std::move(other.m_kmerList)),
-    m_usedGenerator(&KmerCollection::generateKmersN),
+    m_usedGenerator(&KmerCollection::generateKmerN),
     m_compress(std::move(other.m_compress))
-  {}
+  {
+    other.m_kmerList = nullptr;
+  }
 
   virtual ~KmerCollection() {
     if(m_kmerList) {
@@ -136,47 +138,59 @@ class KmerCollection {
     }
   }
 
+  int size() {
+    generateKmers();
+    return m_kmerListSize;
+  }
+
   KmerCollection::iterator begin() {
+    generateKmers();
+    return KmerIterator(this, 0);
+  }
+
+  inline KmerCollection::iterator end() {
+    return KmerIterator(this, m_kmerListSize);
+  }
+
+ private:
+  inline void generateKmers() {
     if(m_kmerList == nullptr) {
       chooseGenerator();
+
+      m_kmerListSize = (m_seqEntry->seq().size() - m_kmerSize) / m_stepSize + 1;
 
       m_kmerList = new uint_fast64_t[m_kmerListSize];
       const char* ptr = m_seqEntry->seq().data();
 
       for(int i = 0; i < m_kmerListSize; ++i) {
-        m_kmerList[i] = (this->*m_usedGenerator)(&(ptr[i]));
+        m_kmerList[i] = (this->*m_usedGenerator)(&(ptr[i*m_stepSize]));
       }
     }
-    return KmerIterator(this, 0);
   }
 
-  KmerCollection::iterator end() {
-    return KmerIterator(this, m_kmerListSize);
-  }
-
- private:
-  void chooseGenerator() {
+  inline void chooseGenerator() {
     if(m_compress == false) switch(m_kmerSize) {
-      case 8: m_usedGenerator = &KmerCollection::generateUncompressedKmers8; break;
-      default: m_usedGenerator = &KmerCollection::generateUncompressedKmersN; break;
+      case 8: m_usedGenerator = &KmerCollection::generateUncompressedKmer8; break;
+      default: m_usedGenerator = &KmerCollection::generateUncompressedKmerN; break;
     }
     else switch(m_kmerSize) {
-      case 8: m_usedGenerator = &KmerCollection::generateKmers8; break;
-      default: m_usedGenerator = &KmerCollection::generateKmersN; break;
+      case 8: m_usedGenerator = &KmerCollection::generateKmer8; break;
+      default: m_usedGenerator = &KmerCollection::generateKmerN; break;
     }
   }
 
   // This assumes the next 8 chars is readable
-  uint_fast64_t generateKmers8(const char* ptr) {
-    uint_fast64_t kmer = *(const uint_fast64_t*)ptr;
+  uint_fast64_t generateKmer8(const char* ptr) const {
+    const uint_fast64_t mask = 0x0606060606060606;
+    uint_fast64_t kmer = *(const uint_fast64_t*)ptr & mask;
     kmer >>= 1; // 00000110 => 00000011
     kmer |= kmer >> 30; // 00001111
     kmer |= kmer >> 12; // 11111111
-    return kmer;
+    return kmer & 0xFFFF;
   }
 
   // This assumes the next N chars is readable
-  uint_fast64_t generateKmersN(const char* ptr) {
+  uint_fast64_t generateKmerN(const char* ptr) const {
     uint_fast64_t kmer = (ptr[0] >> 1) & 3;
     for(int i = 1; i < m_kmerSize; ++i) {
       kmer |= (ptr[i] & 6) << (i*2-1);
@@ -185,12 +199,12 @@ class KmerCollection {
   }
 
   // This assumes the next N chars is readable
-  uint_fast64_t generateUncompressedKmers8(const char* ptr) {
+  uint_fast64_t generateUncompressedKmer8(const char* ptr) const {
     return *(const uint_fast64_t*)ptr;
   }
 
   // This assumes the next N chars is readable, and N < 8
-  uint_fast64_t generateUncompressedKmersN(const char* ptr) {
+  uint_fast64_t generateUncompressedKmerN(const char* ptr) const {
     uint_fast64_t kmer = *(const uint_fast64_t*)ptr;
     kmer >>= (8 - m_kmerSize) << 8;
     return kmer;
@@ -204,7 +218,7 @@ class KmerCollection {
 
   int m_kmerListSize;
   uint_fast64_t* m_kmerList;
-  uint_fast64_t (KmerCollection::*m_usedGenerator)(const char*);
+  uint_fast64_t (KmerCollection::*m_usedGenerator)(const char*)const;
 
   bool m_compress;
 };
