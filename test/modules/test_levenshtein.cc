@@ -41,4 +41,62 @@ TEST_CASE("Levenshtein returns a correct result after comparison", "[levenshtein
 
     REQUIRE(compare.compare(&t1, &t2) == false);
   }
+
+  SECTION("compare two similar strings of differing length") {
+    t1.set_seq("acgtagcgcggctatagcgcataaatcgctctagcgctatcttcgggttagca");
+    t2.set_seq("acgtagcgcggctatagcgcataaatcctctagcgctatcttcgggttagca");
+
+    REQUIRE(compare.compare(&t1, &t2));
+  }
+
+  SECTION("compare two similar strings of same length") {
+    t1.set_seq("acgtagcgcggctatagcgcataaatcgctctagcgctatcttcgggttagca");
+    t2.set_seq("acgtagcgcggctatagcgcataaatcgctctagcgctatcttcgggttagca");
+
+    REQUIRE(compare.compare(&t1, &t2));
+  }
+}
+
+TEST_CASE("Levenshtein properly handles empty sequences", "[levenshtein]") {
+  SeqEntry t1, t2;
+  LevenshteinDistance compare;
+  compare.setIdentity(0.05f);
+
+  SECTION("First sequence is empty") {
+    t1.set_seq("");
+    t2.set_seq("a");
+
+    REQUIRE(!compare.compare(&t1, &t2));
+  }
+
+  SECTION("Second Sequence is empty") {
+    t1.set_seq("a");
+    t2.set_seq("");
+
+    REQUIRE(!compare.compare(&t1, &t2));
+  }
+}
+
+TEST_CASE("Levenshtein properly handles same sequence", "[levenshtein]") {
+  SeqEntry t1;
+  LevenshteinDistance compare;
+  t1.set_seq("acgt");
+
+  SECTION("identity is 0.05f") {
+    compare.setIdentity(0.05f);
+
+    REQUIRE(compare.compare(&t1, &t1));
+  }
+
+  SECTION("identity is 0.00f") {
+    compare.setIdentity(0.00f);
+
+    REQUIRE(compare.compare(&t1, &t1));
+  }
+
+  SECTION("identity is 1.00f") {
+    compare.setIdentity(1.00f);
+
+    REQUIRE(compare.compare(&t1, &t1));
+  }
 }
