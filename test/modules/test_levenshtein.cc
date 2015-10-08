@@ -51,7 +51,7 @@ TEST_CASE("Levenshtein returns a correct result after comparison", "[levenshtein
 
   SECTION("compare two similar strings of same length") {
     t1.set_seq("acgtagcgcggctatagcgcataaatcgctctagcgctatcttcgggttagca");
-    t2.set_seq("acgtagcgcggctatagcgcataaatcgctctagcgctatcttcgggttagca");
+    t2.set_seq("acgtagcgcggctatagcgcataaatgggtctagcgctatcttcgggttagca");
 
     REQUIRE(compare.compare(&t1, &t2));
   }
