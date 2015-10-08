@@ -20,6 +20,8 @@
 
 #include "levenshtein.h"
 
+#include <cctype>
+
 #include "../seq_entry.h"
 #include "../utils.h"
 
