@@ -114,7 +114,7 @@ class KmerCollection {
     m_usedGenerator(&KmerCollection::generateKmerN),
     m_compress(compressHint)
   {
-    if(m_compress == false && kmerSize > 8) {
+    if(!m_compress && kmerSize > 8) {
       m_compress = true;
     }
   }
@@ -169,7 +169,7 @@ class KmerCollection {
   }
 
   inline void chooseGenerator() {
-    if(m_compress == false) switch(m_kmerSize) {
+    if(!m_compress) switch(m_kmerSize) {
       case 8: m_usedGenerator = &KmerCollection::generateUncompressedKmer8; break;
       default: m_usedGenerator = &KmerCollection::generateUncompressedKmerN; break;
     }
