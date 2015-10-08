@@ -29,14 +29,12 @@ bool LevenshteinDistance::compare(SeqEntry* seq1, SeqEntry* seq2) {
   std::string str1 = seq1->seq();
   std::string str2 = seq2->seq();
 
-  // degenerate cases
-  if (&str1 == &str2) return 0.0f;
-  if (str1.length() == 0) return str2.length();
-  if (str2.length() == 0) return str1.length();
+  // return true if the two strings are the same
+  if (&str1 == &str2) return true;
 
   // create two work vectors of integer distances
-  int* v0 = new int[str2.length() + 1];
-  int* v1 = new int[str2.length() + 1];
+  size_t* v0 = new size_t[str2.length() + 1];
+  size_t* v1 = new size_t[str2.length() + 1];
 
   // Get data for calculating relative distance.
   size_t lengthDiff = (str1.length() < str2.length()
@@ -47,6 +45,10 @@ bool LevenshteinDistance::compare(SeqEntry* seq1, SeqEntry* seq2) {
         : str2.length());
   // Maximal errors before fail-fast kicks in
   float maxErrors = getIdentity() * smallestLength + lengthDiff;
+
+  // degenerate cases
+  if (str1.length() == 0 && maxErrors < str2.length()) return false;
+  if (str2.length() == 0 && maxErrors < str1.length()) return false;
 
   // initialize v0 (the previous row of distances)
   // this row is A[0][i]: edit distance for an empty str1
@@ -61,7 +63,7 @@ bool LevenshteinDistance::compare(SeqEntry* seq1, SeqEntry* seq2) {
     // first element of v1 is A[i+1][0]
     //   edit distance is delete (i+1) chars from s to match empty t
     v1[0] = i + 1;
-    int minErrors = v1[0];
+    size_t minErrors = v1[0];
 
     // use formula to fill in the rest of the row
     for (size_t j = 0; j < str2.length(); j++) {
@@ -79,16 +81,16 @@ bool LevenshteinDistance::compare(SeqEntry* seq1, SeqEntry* seq2) {
     }
 
     // Swap pointer v0 and v1
-    int* tmp = v0;
+    size_t* tmp = v0;
     v0 = v1;
     v1 = tmp;
   }
 
-  int result = v0[str2.length()];
+  size_t result = v0[str2.length()];
 
   delete[] v0;
   delete[] v1;
 
   float similarity = static_cast<float>((result - lengthDiff)) / smallestLength;
-  return similarity < getIdentity(); 
+  return similarity < getIdentity();
 }
