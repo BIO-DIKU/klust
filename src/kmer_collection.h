@@ -43,6 +43,9 @@ class KmerCollection {
       m_position(position)
     {}
 
+    /**
+    * Assignment operator.
+    */
     KmerIterator& operator=(const KmerIterator& other) {
     if(this != &other) {
         m_owner = other.m_owner;
@@ -51,39 +54,63 @@ class KmerCollection {
       return *this;
     }
 
+    /**
+    * Comparison operator.
+    */
     bool operator==(const KmerIterator& other) {
       return m_owner == other.m_owner &&
              m_position == other.m_position;
     }
 
+    /**
+    * Comparison operator.
+    */
     bool operator!=(const KmerIterator& other) {
       return !(*this == other);
     }
 
+    /**
+    * Dereference operator.
+    */
     uint_fast64_t& operator*() {
       return m_owner->m_kmerList[m_position];
     }
 
+    /**
+    * Dereference operator.
+    */
     uint_fast64_t* operator->() {
       return &m_owner->m_kmerList[m_position];
     }
 
+    /**
+    * Increment iterator.
+    */
     KmerIterator operator++() {
       ++m_position;
       return *this;
     }
 
+    /**
+    * Increment iterator.
+    */
     KmerIterator operator++(int) {
       const KmerIterator clone(*this);
       ++(*this);
       return clone;
     }
 
+    /**
+    * Decrement iterator.
+    */
     KmerIterator operator--() {
       --m_position;
       return *this;
     }
 
+    /**
+    * Decrement iterator.
+    */
     KmerIterator operator--(int) {
       const KmerIterator clone(*this);
       --(*this);
@@ -138,16 +165,27 @@ class KmerCollection {
     }
   }
 
+  /**
+  * Generates kmers if necessary.
+  * \return Number of kmers.
+  */
   int size() {
     generateKmers();
     return m_kmerListSize;
   }
 
+  /**
+  * Generates kmers if necessary.
+  * \return Iterator to KmerCollection's first element.
+  */
   KmerCollection::iterator begin() {
     generateKmers();
     return KmerIterator(this, 0);
   }
 
+  /**
+  * \return Iterator to the element after KmerCollection's last element.
+  */
   inline KmerCollection::iterator end() {
     return KmerIterator(this, m_kmerListSize);
   }
