@@ -32,10 +32,6 @@ bool LevenshteinDistance::compare(SeqEntry* seq1, SeqEntry* seq2) {
   // return true if the two strings are the same
   if (&str1 == &str2) return true;
 
-  // create two work vectors of integer distances
-  size_t* v0 = new size_t[str2.length() + 1];
-  size_t* v1 = new size_t[str2.length() + 1];
-
   // Get data for calculating relative distance.
   size_t lengthDiff = (str1.length() < str2.length()
         ? str2.length() - str1.length()
@@ -48,15 +44,15 @@ bool LevenshteinDistance::compare(SeqEntry* seq1, SeqEntry* seq2) {
 
   // degenerate cases
   if (str1.length() == 0 && maxErrors < str2.length()) {
-    delete[] v0;
-    delete[] v1;
     return false;
   }
   if (str2.length() == 0 && maxErrors < str1.length()) {
-    delete[] v0;
-    delete[] v1;
     return false;
   }
+
+  // create two work vectors of integer distances
+  size_t* v0 = new size_t[str2.length() + 1];
+  size_t* v1 = new size_t[str2.length() + 1];
 
   // initialize v0 (the previous row of distances)
   // this row is A[0][i]: edit distance for an empty str1
