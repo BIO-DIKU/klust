@@ -21,6 +21,7 @@
 #include "levenshtein.h"
 
 #include <cctype>
+#include <memory>
 
 #include "../seq_entry.h"
 #include "../utils.h"
@@ -50,9 +51,9 @@ bool LevenshteinDistance::compare(SeqEntry* seq1, SeqEntry* seq2) {
     return false;
   }
 
-  // create two work vectors of integer distances
-  size_t* v0 = new size_t[str2.length() + 1];
-  size_t* v1 = new size_t[str2.length() + 1];
+  // create two work arrays of integer distances
+  std::unique_ptr<size_t[]> v0(new size_t[str2.length() + 1]);
+  std::unique_ptr<size_t[]> v1(new size_t[str2.length() + 1]);
 
   // initialize v0 (the previous row of distances)
   // this row is A[0][i]: edit distance for an empty str1
@@ -78,22 +79,15 @@ bool LevenshteinDistance::compare(SeqEntry* seq1, SeqEntry* seq2) {
     }
 
     if (minErrors > maxErrors) {
-      delete[] v0;
-      delete[] v1;
       // Fail Fast
       return false;
     }
 
     // Swap pointer v0 and v1
-    size_t* tmp = v0;
-    v0 = v1;
-    v1 = tmp;
+    v0.swap(v1);
   }
 
   size_t result = v0[str2.length()];
-
-  delete[] v0;
-  delete[] v1;
 
   float similarity = static_cast<float>((result - lengthDiff)) / smallestLength;
   return similarity < getIdentity();
