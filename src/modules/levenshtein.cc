@@ -30,8 +30,11 @@ bool LevenshteinDistance::compare(SeqEntry* seq1, SeqEntry* seq2) {
   const std::string& str1 = seq1->seq();
   const std::string& str2 = seq2->seq();
 
-  // return true if the two strings are the same
+  // degenerate cases
+  // Return true if the two strings are the same
   if (&str1 == &str2) return true;
+  // If any of the string are empty they are always 100% different. Return false
+  if (str1.empty() || str2.empty()) return false;
 
   // Get data for calculating relative distance.
   size_t lengthDiff = (str1.length() < str2.length()
@@ -40,16 +43,9 @@ bool LevenshteinDistance::compare(SeqEntry* seq1, SeqEntry* seq2) {
   size_t smallestLength = (str1.length() < str2.length()
         ? str1.length()
         : str2.length());
+        
   // Maximal errors before fail-fast kicks in
   float maxErrors = getIdentity() * smallestLength + lengthDiff;
-
-  // degenerate cases
-  if (str1.length() == 0 && maxErrors < str2.length()) {
-    return false;
-  }
-  if (str2.length() == 0 && maxErrors < str1.length()) {
-    return false;
-  }
 
   // create two work arrays of integer distances
   std::unique_ptr<size_t[]> v0(new size_t[str2.length() + 1]);
