@@ -33,7 +33,7 @@ class KmerCollection {
   class KmerIterator : public std::iterator<std::bidirectional_iterator_tag, uint_fast64_t>
   {
    public:
-    KmerIterator(KmerCollection* owner, int position) :
+    KmerIterator(KmerCollection* owner, size_t position) :
     m_owner(owner),
     m_position(position)
     {}
@@ -119,7 +119,7 @@ class KmerCollection {
 
    private:
     KmerCollection* m_owner;
-    int m_position;
+    size_t m_position;
   };
 
  public:
@@ -169,7 +169,7 @@ class KmerCollection {
   * Generates kmers if necessary.
   * \return Number of kmers.
   */
-  int size() {
+  size_t size() {
     generateKmers();
     return m_kmerListSize;
   }
@@ -200,7 +200,7 @@ class KmerCollection {
       m_kmerList = new uint_fast64_t[m_kmerListSize];
       const char* ptr = m_seqEntry->seq().data();
 
-      for(int i = 0; i < m_kmerListSize; ++i) {
+      for(size_t i = 0; i < m_kmerListSize; ++i) {
         m_kmerList[i] = (this->*m_usedGenerator)(&(ptr[i*m_stepSize]));
       }
     }
@@ -254,7 +254,7 @@ class KmerCollection {
   int m_stepSize;
   int m_scoreMin;
 
-  int m_kmerListSize;
+  size_t m_kmerListSize;
   uint_fast64_t* m_kmerList;
   uint_fast64_t (KmerCollection::*m_usedGenerator)(const char*)const;
 
