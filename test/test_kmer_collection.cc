@@ -23,7 +23,7 @@
 #define G_ "11"
 #define T_ "10"
 
-#include <catch.hpp>
+#include "catch.hpp"
 
 #include "../src/kmer_collection.h"
 
