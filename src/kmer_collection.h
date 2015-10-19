@@ -159,12 +159,6 @@ class KmerCollection {
     other.m_kmerList = nullptr;
   }
 
-  virtual ~KmerCollection() {
-    if(m_kmerList) {
-      delete[] m_kmerList;
-    }
-  }
-
   /**
   * Generates kmers if necessary.
   * \return Number of kmers.
@@ -197,7 +191,7 @@ class KmerCollection {
 
       m_kmerListSize = (m_seqEntry->seq().size() - m_kmerSize) / m_stepSize + 1;
 
-      m_kmerList = new uint_fast64_t[m_kmerListSize];
+      m_kmerList = std::unique_ptr<uint_fast64_t[]>(new uint_fast64_t[m_kmerListSize]);
       const char* ptr = m_seqEntry->seq().data();
 
       for(size_t i = 0; i < m_kmerListSize; ++i) {
@@ -255,7 +249,7 @@ class KmerCollection {
   int m_scoreMin;
 
   size_t m_kmerListSize;
-  uint_fast64_t* m_kmerList;
+  std::unique_ptr<uint_fast64_t[]> m_kmerList;
   uint_fast64_t (KmerCollection::*m_usedGenerator)(const char*)const;
 
   bool m_compress;

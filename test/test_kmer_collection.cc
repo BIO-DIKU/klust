@@ -31,6 +31,7 @@
 #include <memory>
 #include <string>
 #include <sstream>
+#include <memory>
 
 TEST_CASE("Basic functionalities of kmer_collection", "[kmer_collection]") {
   SeqEntry s("name", "caaatcgcgggatttcgaaactatggg", {}, SeqEntry::SeqType::nucleotide);
@@ -40,16 +41,16 @@ TEST_CASE("Basic functionalities of kmer_collection", "[kmer_collection]") {
   auto itBegin = collection.begin();
   auto itEnd = collection.end();
 
-  SECTION("Begin not equal end") {
+  SECTION("Inequality of different objects should be true") {
     REQUIRE(itBegin != itEnd);
   }
 
-  SECTION("Comparison for equality 1") {
+  SECTION("Equality of the same object should be the same") {
     REQUIRE(itBegin == itBegin);
     REQUIRE(itEnd == itEnd);
   }
 
-  SECTION("Size returns correctly") {
+  SECTION("size() should return correct size") {
     REQUIRE(collection.size() == 20);
   }
 }
@@ -62,7 +63,7 @@ TEST_CASE("All possible generated kmers are unique", "[kmer_collection]") {
   int kmerNum = 1 << (2 * ksize);
 
   std::stringstream ss;
-  int* kmer_counter = new int[kmerNum];
+  std::unique_ptr<int[]> kmer_counter(new int[kmerNum]);
 
   // Generate sequence string with all possible permutations of k=8
   for(int n = 0; n < kmerNum; ++n) {
@@ -96,8 +97,6 @@ TEST_CASE("All possible generated kmers are unique", "[kmer_collection]") {
 
   REQUIRE(*(collection.begin()) == 0);
   REQUIRE(*(--collection.end()) == kmerNum-1);
-
-  delete[] kmer_counter;
 }
 
 TEST_CASE("Basic KmerIterator functionality for k = 3", "[kmer_collection]") {
