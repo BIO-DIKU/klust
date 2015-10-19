@@ -18,17 +18,18 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef KLUST_MODULES_LEVENSHTEIN_H_
-#define KLUST_MODULES_LEVENSHTEIN_H_
+#ifndef KLUST_UTILS_H_
+#define KLUST_UTILS_H_
 
-#include <string>
+template<typename T>
+inline T const& min3 (T const& a, T const& b, T const& c){
+    return a < b
+        ? (a < c
+            ? a
+            : c)
+        : (b < c ?
+            b
+            : c);
+}
 
-#include "../seq_entry.h"
-#include "../interface_compare.h"
-
-class LevenshteinDistance : public InterfaceCompare {
- public:
-  bool compare(SeqEntry* seq1, SeqEntry* seq2);
-};
-
-#endif  // KLUST_MODULES_LEVENSHTEIN_H_
+#endif // KLUST_FASTA_READER_H_
