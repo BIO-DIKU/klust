@@ -220,11 +220,11 @@ class KmerCollection {
   // This assumes the next 8 chars is readable
   uint_fast64_t generateKmer8(const char* ptr) const {
     const uint_fast64_t mask = 0x0606060606060606;
-    uint_fast64_t kmer = *(const uint_fast64_t*)ptr & mask;
+    uint64_t kmer = *(const uint64_t*)ptr & mask;
     kmer >>= 1; // 00000110 => 00000011
     kmer |= kmer >> 30; // 00001111
     kmer |= kmer >> 12; // 11111111
-    return kmer & 0xFFFF;
+    return static_cast<uint_fast64_t>(kmer & 0xFFFF);
   }
 
   // This assumes the next N chars is readable
@@ -238,14 +238,14 @@ class KmerCollection {
 
   // This assumes the next N chars is readable
   uint_fast64_t generateUncompressedKmer8(const char* ptr) const {
-    return *(const uint_fast64_t*)ptr;
+    return static_cast<uint_fast64_t>(*(const uint64_t*)ptr);
   }
 
   // This assumes the next N chars is readable, and N < 8
   uint_fast64_t generateUncompressedKmerN(const char* ptr) const {
-    uint_fast64_t kmer = *(const uint_fast64_t*)ptr;
+    uint64_t kmer = *(const uint64_t*)ptr;
     kmer >>= (8 - m_kmerSize) << 8;
-    return kmer;
+    return static_cast<uint_fast64_t>(kmer);
   }
 
  private:
