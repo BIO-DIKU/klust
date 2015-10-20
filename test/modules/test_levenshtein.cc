@@ -57,46 +57,55 @@ TEST_CASE("Levenshtein returns a correct result after comparison", "[levenshtein
   }
 }
 
-TEST_CASE("Levenshtein properly handles empty sequences", "[levenshtein]") {
+void empty_test(float identity) {
   SeqEntry t1, t2;
   LevenshteinDistance compare;
-  compare.setIdentity(0.05f);
 
-  SECTION("First sequence is empty") {
-    t1.set_seq("");
-    t2.set_seq("a");
+  SECTION("With identity " + std::to_string(identity)) {
 
-    REQUIRE(!compare.compare(&t1, &t2));
-  }
+    compare.setIdentity(identity);
 
-  SECTION("Second Sequence is empty") {
-    t1.set_seq("a");
-    t2.set_seq("");
+    SECTION("First sequence is empty") {
+      t1.set_seq("");
+      t2.set_seq("a");
 
-    REQUIRE(!compare.compare(&t1, &t2));
+      REQUIRE(!compare.compare(&t1, &t2));
+    }
+
+    SECTION("Second Sequence is empty") {
+      t1.set_seq("a");
+      t2.set_seq("");
+
+      REQUIRE(!compare.compare(&t1, &t2));
+    }
   }
 }
 
-TEST_CASE("Levenshtein properly handles same sequence", "[levenshtein]") {
-  SeqEntry t1;
+TEST_CASE("Levenshtein properly handles empty sequences.\n"
+          "Everything is 100%% different from an empty string",
+          "[levenshtein]") {
+  empty_test(0.05f);
+  empty_test(1.00f);
+  empty_test(0.00f);
+}
+
+void test_same_sequence(float identity) {
+  SeqEntry seq;
   LevenshteinDistance compare;
-  t1.set_seq("acgt");
+  seq.set_seq("acgt");
 
-  SECTION("identity is 0.05f") {
-    compare.setIdentity(0.05f);
+  SECTION("when identity is " + std::to_string(identity)) {
+    compare.setIdentity(identity);
 
-    REQUIRE(compare.compare(&t1, &t1));
+    REQUIRE(compare.compare(&seq, &seq));
   }
+}
 
-  SECTION("identity is 0.00f") {
-    compare.setIdentity(0.00f);
+TEST_CASE("Levenshtein properly handles same sequence.\n"
+          "Should always be compared true.",
+          "[levenshtein]") {
 
-    REQUIRE(compare.compare(&t1, &t1));
-  }
-
-  SECTION("identity is 1.00f") {
-    compare.setIdentity(1.00f);
-
-    REQUIRE(compare.compare(&t1, &t1));
-  }
+  test_same_sequence(0.05f);
+  test_same_sequence(0.00f);
+  test_same_sequence(1.00f);
 }
