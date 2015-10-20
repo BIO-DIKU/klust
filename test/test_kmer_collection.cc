@@ -92,6 +92,7 @@ TEST_CASE("All possible generated kmers are unique", "[kmer_collection]") {
 
   int allIsCool = 0;
   for(int i = 0; i < kmerNum; ++i) {
+    INFO( "index: i = " << i );
     REQUIRE(kmer_counter[i] == 1);
   }
 
