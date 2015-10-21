@@ -181,6 +181,7 @@ class KmerCollection {
   * \return Iterator to the element after KmerCollection's last element.
   */
   inline KmerCollection::iterator end() {
+    generateKmers();
     return KmerIterator(this, m_kmerListSize);
   }
 

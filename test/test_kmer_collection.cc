@@ -127,3 +127,34 @@ TEST_CASE("Basic KmerIterator functionality for k = 3", "[kmer_collection]") {
     REQUIRE(it == collection.begin());
   }
 }
+
+TEST_CASE("KmerIterator iterate from end", "[kmer_collection") {
+  auto k = 3;
+  CAPTURE(k);
+
+  SeqEntry s("name", "ctgta", {}, SeqEntry::SeqType::nucleotide);
+  std::shared_ptr<SeqEntry> p = std::make_shared<SeqEntry>(s);
+  KmerCollection collection(p, 3, 1);
+
+  auto it = collection.end();
+
+  --it;
+
+  SECTION("KmerIterator can be {in,de}cremented until reaching {end,begin}") {
+    REQUIRE(*it == (std::bitset<64>(A_ T_ G_)).to_ulong());
+    --it;
+    REQUIRE(*it == (std::bitset<64>(T_ G_ T_)).to_ulong());
+    --it;
+    REQUIRE(*it == (std::bitset<64>(G_ T_ C_)).to_ulong());
+    REQUIRE(it == collection.begin());
+
+    REQUIRE(*it == (std::bitset<64>(G_ T_ C_)).to_ulong());
+    ++it;
+    REQUIRE(*it == (std::bitset<64>(T_ G_ T_)).to_ulong());
+    ++it;
+    REQUIRE(*it == (std::bitset<64>(A_ T_ G_)).to_ulong());
+    ++it;
+
+    REQUIRE(it == collection.end());
+  }
+}
