@@ -31,6 +31,6 @@ SeqEntry::SeqEntry(const std::string& name, const std::string& sequence,
       type_(sequence_type) {
 }
 
-SeqEntry SeqEntry::SubSeq(int i, int len) const {
+SeqEntry SeqEntry::SubSeq(size_t i, size_t len) const {
   return SeqEntry(name(), seq().substr(i, len), scores(), type());
 }

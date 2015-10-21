@@ -40,7 +40,7 @@ class SeqEntry {
    * SeqEntry object it is called on, starting at the given index and of
    * the given length.
    */
-  SeqEntry SubSeq(int i, int len) const;
+  SeqEntry SubSeq(size_t i, size_t len) const;
 
   // accessors
   const std::string& name() const { return name_; }
