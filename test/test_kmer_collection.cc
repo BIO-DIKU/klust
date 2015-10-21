@@ -134,7 +134,7 @@ TEST_CASE("KmerIterator iterate from end", "[kmer_collection") {
 
   SeqEntry s("name", "ctgta", {}, SeqEntry::SeqType::nucleotide);
   std::shared_ptr<SeqEntry> p = std::make_shared<SeqEntry>(s);
-  KmerCollection collection(p, 3, 1);
+  KmerCollection collection(p, k, 1);
 
   auto it = collection.end();
 
@@ -153,7 +153,7 @@ TEST_CASE("KmerIterator iterate from end", "[kmer_collection") {
     REQUIRE(*it == (std::bitset<64>(T_ G_ T_)).to_ulong());
     ++it;
     REQUIRE(*it == (std::bitset<64>(A_ T_ G_)).to_ulong());
-    ++it;
+    ++it; 
 
     REQUIRE(it == collection.end());
   }
