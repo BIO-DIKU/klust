@@ -18,8 +18,27 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
+#include <vector>
+#include <memory>
+
+#include "../interface_clust.h"
+#include "../resulttypes/sequence_result.h"
+#include "../resulttypes/cluster_result.h"
 #include "naive_clust.h"
 
-int NaiveClust::addSequence(SeqEntry&) {
-  return 0;
+NaiveClust::NaiveClust() : m_cluster_number(0) {
+  std::vector<ClusterResult> m_summations;
+}
+
+SequenceResult NaiveClust::addSequence(SeqEntry& seq) {
+  SequenceResult r(&seq, m_cluster_number, SequenceResult::ResultType::kCentroid);
+  m_summations.emplace_back(m_cluster_number);
+
+  m_cluster_number++;
+
+  return r;
+}
+
+std::vector<ClusterResult> NaiveClust::finish() {
+  return m_summations;
 }

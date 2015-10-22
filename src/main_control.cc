@@ -51,9 +51,7 @@ int MainControl::run() {
 
   SeqEntry seq;
   while (!m_reader->getNextLine(seq)) {
-    if (m_clust->addSequence(seq) > 0) {
-      m_writer->write(seq);
-    }
+    m_writer->write(seq);  // TODO: clust!
   }
 
   return EXIT_SUCCESS;

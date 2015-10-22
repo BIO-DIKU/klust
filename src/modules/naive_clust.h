@@ -21,11 +21,27 @@
 #ifndef KLUST_MODULES_NAIVE_CLUST_H_
 #define KLUST_MODULES_NAIVE_CLUST_H_
 
-#include "../interface_clust.h"
+#include <vector>
+#include <memory>
 
+#include "../interface_clust.h"
+#include "../seq_entry.h"
+#include "../resulttypes/sequence_result.h"
+#include "../resulttypes/cluster_result.h"
+
+/**
+ * Extremely simple clustering, which puts every sequence in its own cluster.
+ */
 class NaiveClust : public InterfaceClust {
  public:
-  int addSequence(SeqEntry& seq);
+  NaiveClust();
+
+  SequenceResult addSequence(SeqEntry& seq);
+
+  std::vector<ClusterResult> finish();
+ private:
+  uint32_t m_cluster_number;
+  std::vector<ClusterResult> m_summations;
 };
 
 #endif // KLUST_MODULES_NAIVE_CLUST_H_

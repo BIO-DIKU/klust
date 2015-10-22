@@ -21,16 +21,21 @@
 #ifndef KLUST_INTERFACE_CLUST_H_
 #define KLUST_INTERFACE_CLUST_H_
 
+#include <vector>
+
 #include "seq_entry.h"
 #include "interface_compare.h"
 #include "interface_kmergen.h"
+#include "resulttypes/sequence_result.h"
+#include "resulttypes/cluster_result.h"
 
 class InterfaceClust {
  public:
   /**
    * Returns positive value if seq must be written to file
    */
-  virtual int addSequence(SeqEntry& seq) = 0;
+  virtual SequenceResult addSequence(SeqEntry& seq) = 0;
+  virtual std::vector<ClusterResult> finish() = 0;
 
   void setCompare(InterfaceCompare* compare) { m_compare = compare; }
   void setKmergen(InterfaceKmergen* kmergen) { m_kmergen = kmergen; }
