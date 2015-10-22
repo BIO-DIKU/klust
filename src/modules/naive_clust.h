@@ -21,11 +21,41 @@
 #ifndef KLUST_MODULES_NAIVE_CLUST_H_
 #define KLUST_MODULES_NAIVE_CLUST_H_
 
-#include "../interface_clust.h"
+#include <vector>
+#include <memory>
 
+#include "../interface_clust.h"
+#include "../seq_entry.h"
+
+struct Centroid {
+  SeqEntry* seq;
+  uint32_t count = 1;
+  uint32_t clusterNumber;
+
+  Centroid(SeqEntry* seq, uint32_t clusterNumber) {
+    this->seq = seq;
+    this->clusterNumber = clusterNumber;
+  }
+};
+
+/**
+ * Extremely simple clustering, which puts every sequence in its own cluster.
+ */
 class NaiveClust : public InterfaceClust {
  public:
+  NaiveClust();
+
   int addSequence(SeqEntry& seq);
+
+  /**
+   * Return a shared pointer to the vector of clusters.
+   *
+   * @return  Vector of generated clusters.
+   */
+  std::shared_ptr<std::vector<Centroid>> getClusters();
+ private:
+  uint32_t m_cluster_count;
+  std::shared_ptr<std::vector<Centroid>> m_clusters;
 };
 
 #endif // KLUST_MODULES_NAIVE_CLUST_H_

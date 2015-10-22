@@ -18,8 +18,24 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
+#include <vector>
+#include <memory>
+
 #include "naive_clust.h"
 
-int NaiveClust::addSequence(SeqEntry&) {
+NaiveClust::NaiveClust() : m_cluster_count(0) {
+  m_clusters = std::unique_ptr<std::vector<Centroid>>(
+          new std::vector<Centroid>());
+}
+
+std::shared_ptr<std::vector<Centroid>> NaiveClust::getClusters() {
+  return m_clusters;
+}
+
+int NaiveClust::addSequence(SeqEntry& seq) {
+  m_clusters->emplace_back(&seq, m_cluster_count);
+
+  m_cluster_count++;
+
   return 0;
 }
