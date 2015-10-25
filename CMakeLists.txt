@@ -46,7 +46,7 @@ file(MAKE_DIRECTORY lib)
 add_custom_command(
     OUTPUT lib/BioIO/ lib/BioIO/CMakeLists.txt
     WORKING_DIRECTORY lib/
-    COMMAND git clone https://github.com/BIO-DIKU/BioIO.git
+    COMMAND git clone -b install-feature https://github.com/BIO-DIKU/BioIO.git
 )
 
 add_custom_command(
@@ -59,23 +59,51 @@ add_custom_command(
 add_custom_command(
     OUTPUT lib/BioIO/BioIO
     WORKING_DIRECTORY lib/BioIO/
-    COMMAND make
+    COMMAND make install
     DEPENDS lib/BioIO/Makefile
 )
 
+
+
+# Find BioIO
+# ------------------------
+FIND_PATH(BIOIO_INCLUDE_DIR
+    NAMES bioio.h fasta_reader.h seq_entry.h
+    PATHS
+        ${CMAKE_SOURCE_DIR}/contrib
+        /usr/local/lib/BioIO
+        /usr/local/lib
+        /usr/lib
+)
+
+
+# Find BioIO
+# ------------------------
+FIND_LIBRARY(BIOIO_LIBRARY
+    BioIO
+    PATHS
+        ${CMAKE_SOURCE_DIR}/contrib
+        /usr/local/lib/BioIO
+        /usr/local/lib
+        /usr/lib
+)
+
+include_directories(${BIOIO_INCLUDE_DIR})
 
 # Executable
 # ------------------------
 FILE(GLOB SOURCE_FILES src/*.cc src/modules/*.cc)
 FILE(GLOB HEADER_FILES src/*.h src/modules/*.h)
 
-add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES} lib/BioIO/BioIO)
+add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
 
+target_link_libraries(${PROJECT_NAME} ${BIOIO_LIBRARY})
 
 # Build tests if CMAKE_BUILD_TYPE=Debug is set
 # ------------------------
 if (CMAKE_BUILD_TYPE MATCHES DEBUG OR CMAKE_BUILD_TYPE MATCHES "Debug")
-    include_directories(${CATCH_INCLUDE_PATH})
+    include_directories(${BIOIO_INCLUDE_DIR})
     FILE(GLOB TEST_FILES test/*.cc test/modules/*.cc)
-    add_executable("${PROJECT_NAME}-test" ${TEST_FILES})
+    add_executable("${PROJECT_NAME}-test" ${TEST_FILES} ${BIOIO_LIBRARY})
+    target_link_libraries("${PROJECT_NAME}-test" ${BIOIO_LIBRARY})
 endif()
