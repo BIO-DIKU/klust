@@ -41,35 +41,12 @@ elseif (${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
 endif()
 
 
-file(MAKE_DIRECTORY lib)
-
-add_custom_command(
-    OUTPUT lib/BioIO/ lib/BioIO/CMakeLists.txt
-    WORKING_DIRECTORY lib/
-    COMMAND git clone https://github.com/BIO-DIKU/BioIO.git
-)
-
-add_custom_command(
-    OUTPUT lib/BioIO/Makefile
-    WORKING_DIRECTORY lib/BioIO/
-    COMMAND ${CMAKE_COMMAND} .
-    DEPENDS lib/BioIO/
-)
-
-add_custom_command(
-    OUTPUT lib/BioIO/BioIO
-    WORKING_DIRECTORY lib/BioIO/
-    COMMAND make
-    DEPENDS lib/BioIO/Makefile
-)
-
-
 # Executable
 # ------------------------
 FILE(GLOB SOURCE_FILES src/*.cc src/modules/*.cc)
 FILE(GLOB HEADER_FILES src/*.h src/modules/*.h)
 
-add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES} lib/BioIO/BioIO)
+add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
 
 
 # Build tests if CMAKE_BUILD_TYPE=Debug is set
