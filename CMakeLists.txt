@@ -41,54 +41,23 @@ elseif (${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
 endif()
 
 
-file(MAKE_DIRECTORY lib)
-
-add_custom_command(
-    OUTPUT lib/BioIO/ lib/BioIO/CMakeLists.txt
-    WORKING_DIRECTORY lib/
-    COMMAND git clone -b install-feature https://github.com/BIO-DIKU/BioIO.git
-)
-
-add_custom_command(
-    OUTPUT lib/BioIO/Makefile
-    WORKING_DIRECTORY lib/BioIO/
-    COMMAND ${CMAKE_COMMAND} .
-    DEPENDS lib/BioIO/
-)
-
-add_custom_command(
-    OUTPUT lib/BioIO/BioIO
-    WORKING_DIRECTORY lib/BioIO/
-    COMMAND make install
-    DEPENDS lib/BioIO/Makefile
-)
-
-
-
-# Find BioIO
+# Set up BioIO so it downloads and compiles automatically
 # ------------------------
-FIND_PATH(BIOIO_INCLUDE_DIR
-    NAMES bioio.h fasta_reader.h seq_entry.h
-    PATHS
-        ${CMAKE_SOURCE_DIR}/contrib
-        /usr/local/lib/BioIO
-        /usr/local/lib
-        /usr/lib
+include(ExternalProject)
+set(bioio_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/bioio")
+set(bioio_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/bioio")
+set(bioio_CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${bioio_INSTALL_DIR})
+ExternalProject_Add(
+	bioio
+	PREFIX ${bioio_PREFIX}
+	GIT_REPOSITORY https://github.com/BIO-DIKU/BioIO.git
+	GIT_TAG develop
+	INSTALL_DIR ${bioio_INSTALL_DIR}
+	CMAKE_ARGS ${bioio_CMAKE_ARGS}
 )
 
 
-# Find BioIO
-# ------------------------
-FIND_LIBRARY(BIOIO_LIBRARY
-    BioIO
-    PATHS
-        ${CMAKE_SOURCE_DIR}/contrib
-        /usr/local/lib/BioIO
-        /usr/local/lib
-        /usr/lib
-)
 
-include_directories(${BIOIO_INCLUDE_DIR})
 
 # Executable
 # ------------------------
@@ -98,6 +67,11 @@ FILE(GLOB HEADER_FILES src/*.h src/modules/*.h)
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
 
 target_link_libraries(${PROJECT_NAME} ${BIOIO_LIBRARY})
+
+#Link BioIO
+include_directories(${bioio_INSTALL_DIR}/include)
+link_libraries(${bioio_INSTALL_DIR}/lib/libBioIO.a)
+
 
 # Build tests if CMAKE_BUILD_TYPE=Debug is set
 # ------------------------
