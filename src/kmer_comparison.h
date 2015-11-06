@@ -25,22 +25,28 @@
 
 class KmerComparison {
  public:
-  KmerComparison(int kmerSize, double threshold, int stepSize)
-      : kmerSize_(kmerSize),
+  KmerComparison(int kmer_size, double threshold, int step_size)
+      : kmer_size_(kmer_size),
         threshold_(threshold),
-        stepSize_(stepSize) {
+        step_size_(step_size) {
   }
 
   /*
-   * Returns the similarity of the two given SeqEntry's, i.e. a value in the
+   * Returns true if the similarity of the two given SeqEntries is at
+   * least the threshold similarity. Otherwise it returns false.
+   */
+  bool Compare(const SeqEntry& seq1, const SeqEntry& seq2);
+
+  /*
+   * Returns the similarity of the two given SeqEntries, i.e. a value in the
    * interval [0,1], where 0 means low similarity and 1 means high similarity.
    */
-  double Compare(const SeqEntry& seq1, const SeqEntry& seq2);
+  double Similarity(const SeqEntry& seq1, const SeqEntry& seq2);
 
  private:
-  int kmerSize_;
+  int kmer_size_;
   double threshold_;
-  int stepSize_;
+  int step_size_;
 };
 
 #endif  // KLUST_KMER_COMPARISON_H_

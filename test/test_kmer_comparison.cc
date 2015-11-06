@@ -29,7 +29,10 @@ TEST_CASE("simple test of comparison", "[kmer_comparison]") {
   KmerComparison compare(2, 0.9, 1);
 
   SECTION("s and t should have similarity approx 2/3") {
-    REQUIRE(compare.Compare(s, t) == Approx(2.0/3.0));
+    REQUIRE(compare.Similarity(s, t) == Approx(2.0/3.0));
+  }
+  SECTION("s and t should have similarity < threshold") {
+    REQUIRE(!compare.Compare(s, t));
   }
 }
 
@@ -40,6 +43,9 @@ TEST_CASE("comparison of shorter sequence which is infix of longer sequence", "[
   KmerComparison compare(2, 0.9, 1);
 
   SECTION("s and t should have identity 1.0") {
-    REQUIRE(compare.Compare(s, t) == Approx(1.0));
+    REQUIRE(compare.Similarity(s, t) == Approx(1.0));
+  }
+  SECTION("s and t should have similarity >= threshold") {
+    REQUIRE(compare.Compare(s, t));
   }
 }

@@ -27,7 +27,11 @@
 #include "kmer_collection.h"
 #include "seq_entry.h"
 
-double KmerComparison::Compare(const SeqEntry& seq1, const SeqEntry& seq2) {
+bool KmerComparison::Compare(const SeqEntry& seq1, const SeqEntry& seq2) {
+  return Similarity(seq1, seq2) >= threshold_;
+}
+
+double KmerComparison::Similarity(const SeqEntry& seq1, const SeqEntry& seq2) {
   // length of input sequences
   size_t seq1_len = seq1.seq().length(),
          seq2_len = seq2.seq().length();
@@ -40,11 +44,11 @@ double KmerComparison::Compare(const SeqEntry& seq1, const SeqEntry& seq2) {
                                                                : std::make_shared<SeqEntry>(seq1);
 
   // kmercollections for the two sequences
-  KmerCollection shorter_kmers(shorter_seq, kmerSize_, stepSize_);
-  KmerCollection longer_kmers(longer_seq, kmerSize_, stepSize_);
+  KmerCollection shorter_kmers(shorter_seq, kmer_size_, step_size_);
+  KmerCollection longer_kmers(longer_seq, kmer_size_, step_size_);
 
   // allocate array of length equal to the number of different kmers
-  static const int kmer_count = std::pow(4, kmerSize_);
+  static const int kmer_count = std::pow(4, kmer_size_);
   int *kmers = new int[kmer_count]();  // zero initialized due to ()
 
   int cur_dist = 0;
@@ -66,7 +70,7 @@ double KmerComparison::Compare(const SeqEntry& seq1, const SeqEntry& seq2) {
   int min_dist = cur_dist;  // the least distance window so far
 
   // maximum possible distance in the window, when the sequences share no k-mers
-  int total = 2 * (shorter_seq->seq().size() - kmerSize_ + 1);
+  int total = 2 * (shorter_seq->seq().size() - kmer_size_ + 1);
 
   double similarity = 0;
 
@@ -94,7 +98,7 @@ double KmerComparison::Compare(const SeqEntry& seq1, const SeqEntry& seq2) {
     min_dist = std::min(cur_dist, min_dist);
   }
 
-  similarity = (double) (total - min_dist) / (double) total;
+  similarity = static_cast<double>(total - min_dist) / total;
 
   delete[] kmers;
   return similarity;
