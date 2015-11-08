@@ -23,7 +23,8 @@
 
 #include <string>
 
-#include "../seq_entry.h"
+#include <BioIO/seq_entry.h>
+
 #include "../interface_compare.h"
 
 class LevenshteinDistance : public InterfaceCompare {
@@ -31,4 +32,4 @@ class LevenshteinDistance : public InterfaceCompare {
   bool compare(SeqEntry* seq1, SeqEntry* seq2);
 };
 
-#endif // KLUST_MODULES_LEVENSHTEIN_H_
+#endif  // KLUST_MODULES_LEVENSHTEIN_H_

@@ -21,7 +21,7 @@
 #ifndef KLUST_INTERFACE_KMERGEN_H_
 #define KLUST_INTERFACE_KMERGEN_H_
 
-#include "seq_entry.h"
+#include <BioIO/seq_entry.h>
 
 class InterfaceKmergen {
  public:

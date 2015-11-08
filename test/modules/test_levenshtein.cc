@@ -18,7 +18,7 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#include <catch.hpp>
+#include "../catch.hpp"
 #include <string>
 
 #include "../../src/modules/levenshtein.cc"
@@ -41,4 +41,71 @@ TEST_CASE("Levenshtein returns a correct result after comparison", "[levenshtein
 
     REQUIRE(compare.compare(&t1, &t2) == false);
   }
+
+  SECTION("compare two similar strings of differing length") {
+    t1.set_seq("acgtagcgcggctatagcgcataaatcgctctagcgctatcttcgggttagca");
+    t2.set_seq("acgtagcgcggctatagcgcataaatcctctagcgctatcttcgggttagca");
+
+    REQUIRE(compare.compare(&t1, &t2));
+  }
+
+  SECTION("compare two similar strings of same length") {
+    t1.set_seq("acgtagcgcggctatagcgcataaatcgctctagcgctatcttcgggttagca");
+    t2.set_seq("acgtagcgcggctatagcgcataaatgggtctagcgctatcttcgggttagca");
+
+    REQUIRE(compare.compare(&t1, &t2));
+  }
+}
+
+void empty_test(float identity) {
+  SeqEntry t1, t2;
+  LevenshteinDistance compare;
+
+  SECTION("With identity " + std::to_string(identity)) {
+
+    compare.setIdentity(identity);
+
+    SECTION("First sequence is empty") {
+      t1.set_seq("");
+      t2.set_seq("a");
+
+      REQUIRE(!compare.compare(&t1, &t2));
+    }
+
+    SECTION("Second Sequence is empty") {
+      t1.set_seq("a");
+      t2.set_seq("");
+
+      REQUIRE(!compare.compare(&t1, &t2));
+    }
+  }
+}
+
+TEST_CASE("Levenshtein properly handles empty sequences.\n"
+          "Everything is 100%% different from an empty string",
+          "[levenshtein]") {
+  empty_test(0.05f);
+  empty_test(1.00f);
+  empty_test(0.00f);
+}
+
+void test_same_sequence(float identity) {
+  SeqEntry seq;
+  LevenshteinDistance compare;
+  seq.set_seq("acgt");
+
+  SECTION("when identity is " + std::to_string(identity)) {
+    compare.setIdentity(identity);
+
+    REQUIRE(compare.compare(&seq, &seq));
+  }
+}
+
+TEST_CASE("Levenshtein properly handles same sequence.\n"
+          "Should always be compared true.",
+          "[levenshtein]") {
+
+  test_same_sequence(0.05f);
+  test_same_sequence(0.00f);
+  test_same_sequence(1.00f);
 }

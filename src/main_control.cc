@@ -20,6 +20,8 @@
 
 #include "main_control.h"
 
+#include <BioIO/seq_entry.h>
+
 MainControl::MainControl() :
   m_reader(new FastaReader()),
   m_writer(new FastaWriter()),

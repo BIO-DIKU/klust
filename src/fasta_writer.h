@@ -24,7 +24,7 @@
 #include <iostream>
 #include <string>
 
-#include "seq_entry.h"
+#include <BioIO/seq_entry.h>
 
 class FastaWriter {
  public:

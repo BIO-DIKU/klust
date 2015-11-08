@@ -41,13 +41,25 @@ elseif (${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
 endif()
 
 
-# Find Catch
+# Set up BioIO so it downloads and compiles automatically
 # ------------------------
-FIND_PATH(CATCH_INCLUDE_PATH
-    catch.hpp
-    PATHS
-        ${CMAKE_SOURCE_DIR}/test
+include(ExternalProject)
+set(bioio_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/bioio")
+set(bioio_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/bioio")
+set(bioio_CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${bioio_INSTALL_DIR})
+ExternalProject_Add(
+	bioio
+	PREFIX ${bioio_PREFIX}
+	GIT_REPOSITORY https://github.com/BIO-DIKU/BioIO.git
+	GIT_TAG develop
+	INSTALL_DIR ${bioio_INSTALL_DIR}
+	CMAKE_ARGS ${bioio_CMAKE_ARGS}
 )
+
+# Link BioIO
+include_directories(${bioio_INSTALL_DIR}/include)
+link_libraries(${bioio_INSTALL_DIR}/lib/libBioIO.a)
+
 
 # Executable
 # ------------------------
@@ -60,11 +72,8 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
 # Build tests if CMAKE_BUILD_TYPE=Debug is set
 # ------------------------
 if (CMAKE_BUILD_TYPE MATCHES DEBUG OR CMAKE_BUILD_TYPE MATCHES "Debug")
-    if (NOT CATCH_INCLUDE_PATH)
-        MESSAGE(SEND_ERROR "Could not find file catch.hpp")
-    else()
-        include_directories(${CATCH_INCLUDE_PATH})
-        FILE(GLOB TEST_FILES test/*.cc test/modules/*.cc)
-        add_executable("${PROJECT_NAME}-test" ${TEST_FILES})
-    endif()
+    include_directories(${BIOIO_INCLUDE_DIR})
+    FILE(GLOB TEST_FILES test/*.cc test/modules/*.cc)
+    add_executable("${PROJECT_NAME}-test" ${TEST_FILES})
+    target_link_libraries("${PROJECT_NAME}-test")
 endif()

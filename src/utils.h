@@ -18,19 +18,18 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#include "seq_entry.h"
+#ifndef KLUST_UTILS_H_
+#define KLUST_UTILS_H_
 
-SeqEntry::SeqEntry() : type_(SeqType::nucleotide) {
+template<typename T>
+inline T const& min3 (T const& a, T const& b, T const& c){
+    return a < b
+        ? (a < c
+            ? a
+            : c)
+        : (b < c ?
+            b
+            : c);
 }
 
-SeqEntry::SeqEntry(const std::string& name, const std::string& sequence,
-                   const std::vector<uint8_t>& scores, SeqEntry::SeqType sequence_type)
-    : name_(name),
-      seq_(sequence),
-      scores_(scores),
-      type_(sequence_type) {
-}
-
-SeqEntry SeqEntry::SubSeq(int i, int len) const {
-  return SeqEntry(name(), seq().substr(i, len), scores(), type());
-}
+#endif // KLUST_FASTA_READER_H_

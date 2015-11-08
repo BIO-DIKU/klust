@@ -21,7 +21,7 @@
 #ifndef KLUST_INTERFACE_COMPARE_H_
 #define KLUST_INTERFACE_COMPARE_H_
 
-#include "seq_entry.h"
+#include <BioIO/seq_entry.h>
 
 class InterfaceCompare {
  public:
