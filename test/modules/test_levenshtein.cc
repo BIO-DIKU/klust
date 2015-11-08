@@ -32,28 +32,28 @@ TEST_CASE("Levenshtein returns a correct result after comparison", "[levenshtein
     t1.set_seq("acgtagcgcggctatagcgcataaatcgctctagcgctatcttcgggttagca");
     t2.set_seq("acgtagcgcggctatagcgcataaatcgctctagcgctatcttcgggttagca");
 
-    REQUIRE(compare.compare(&t1, &t2) == true);
+    REQUIRE(compare.Compare(t1, t2) == true);
   }
 
   SECTION("Compare two very different strings") {
     t1.set_seq("acgtagcgcggctatagcgcataaatcgctctagcgctatcttcgggttagca");
     t2.set_seq("ggatcctcatagcggctattgcgaaaagctatttcgcggccctagcga");
 
-    REQUIRE(compare.compare(&t1, &t2) == false);
+    REQUIRE(compare.Compare(t1, t2) == false);
   }
 
   SECTION("compare two similar strings of differing length") {
     t1.set_seq("acgtagcgcggctatagcgcataaatcgctctagcgctatcttcgggttagca");
     t2.set_seq("acgtagcgcggctatagcgcataaatcctctagcgctatcttcgggttagca");
 
-    REQUIRE(compare.compare(&t1, &t2));
+    REQUIRE(compare.Compare(t1, t2));
   }
 
   SECTION("compare two similar strings of same length") {
     t1.set_seq("acgtagcgcggctatagcgcataaatcgctctagcgctatcttcgggttagca");
     t2.set_seq("acgtagcgcggctatagcgcataaatgggtctagcgctatcttcgggttagca");
 
-    REQUIRE(compare.compare(&t1, &t2));
+    REQUIRE(compare.Compare(t1, t2));
   }
 }
 
@@ -69,14 +69,14 @@ void empty_test(float identity) {
       t1.set_seq("");
       t2.set_seq("a");
 
-      REQUIRE(!compare.compare(&t1, &t2));
+      REQUIRE(!compare.Compare(t1, t2));
     }
 
     SECTION("Second Sequence is empty") {
       t1.set_seq("a");
       t2.set_seq("");
 
-      REQUIRE(!compare.compare(&t1, &t2));
+      REQUIRE(!compare.Compare(t1, t2));
     }
   }
 }
@@ -97,7 +97,7 @@ void test_same_sequence(float identity) {
   SECTION("when identity is " + std::to_string(identity)) {
     compare.setIdentity(identity);
 
-    REQUIRE(compare.compare(&seq, &seq));
+    REQUIRE(compare.Compare(seq, seq));
   }
 }
 

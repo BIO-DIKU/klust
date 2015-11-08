@@ -25,7 +25,7 @@
 
 class InterfaceCompare {
  public:
-  virtual bool compare(SeqEntry* seq1, SeqEntry* seq2) = 0;
+  virtual bool Compare(const SeqEntry& seq1, const SeqEntry& seq2) = 0;
 
   void setIdentity(float id) { m_identity = id; }
   float getIdentity() const { return m_identity; }
@@ -34,4 +34,4 @@ class InterfaceCompare {
   float m_identity; // Similarity identity
 };
 
-#endif // KLUST_INTERFACE_COMPARE_H_
+#endif  // KLUST_INTERFACE_COMPARE_H_
