@@ -20,13 +20,14 @@
 
 #include <catch.hpp>
 
-#include "../src/kmer_comparison.cc"
+#include "../../src/modules/kmer_comparison.cc"
 
 TEST_CASE("simple test of comparison", "[kmer_comparison]") {
   SeqEntry s("name", "ACAG", {}, SeqEntry::SeqType::nucleotide);
   SeqEntry t("name", "GACATA", {}, SeqEntry::SeqType::nucleotide);
 
-  KmerComparison compare(2, 0.9, 1);
+  KmerComparison compare(2, 1);
+  compare.setIdentity(0.9);
 
   SECTION("s and t should have similarity approx 2/3") {
     REQUIRE(compare.Similarity(s, t) == Approx(2.0/3.0));
@@ -40,7 +41,8 @@ TEST_CASE("comparison of shorter sequence which is infix of longer sequence", "[
   SeqEntry s("name", "ACTG", {}, SeqEntry::SeqType::nucleotide);
   SeqEntry t("name", "GACTGA", {}, SeqEntry::SeqType::nucleotide);
 
-  KmerComparison compare(2, 0.9, 1);
+  KmerComparison compare(2, 1);
+  compare.setIdentity(0.9);
 
   SECTION("s and t should have identity 1.0") {
     REQUIRE(compare.Similarity(s, t) == Approx(1.0));

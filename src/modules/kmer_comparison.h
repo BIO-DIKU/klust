@@ -21,13 +21,14 @@
 #ifndef KLUST_KMER_COMPARISON_H_
 #define KLUST_KMER_COMPARISON_H_
 
-#include "seq_entry.h"
+#include <BioIO/seq_entry.h>
 
-class KmerComparison {
+#include "../interface_compare.h"
+
+class KmerComparison : public InterfaceCompare {
  public:
-  KmerComparison(int kmer_size, double threshold, int step_size)
+  KmerComparison(int kmer_size, int step_size)
       : kmer_size_(kmer_size),
-        threshold_(threshold),
         step_size_(step_size) {
   }
 
@@ -45,7 +46,6 @@ class KmerComparison {
 
  private:
   int kmer_size_;
-  double threshold_;
   int step_size_;
 };
 

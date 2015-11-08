@@ -24,11 +24,12 @@
 #include <cmath>
 #include <memory>
 
-#include "kmer_collection.h"
-#include "seq_entry.h"
+#include <BioIO/seq_entry.h>
+
+#include "../kmer_collection.h"
 
 bool KmerComparison::Compare(const SeqEntry& seq1, const SeqEntry& seq2) {
-  return Similarity(seq1, seq2) >= threshold_;
+  return Similarity(seq1, seq2) >= m_identity;
 }
 
 double KmerComparison::Similarity(const SeqEntry& seq1, const SeqEntry& seq2) {
