@@ -26,7 +26,7 @@
 #include <iterator>
 #include <memory>
 
-#include "seq_entry.h"
+#include <BioIO/seq_entry.h>
 
 class KmerCollection {
 

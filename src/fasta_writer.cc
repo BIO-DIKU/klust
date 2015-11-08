@@ -18,9 +18,11 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
+#include "fasta_writer.h"
+
 #include <fstream>
 
-#include "fasta_writer.h"
+#include <BioIO/seq_entry.h>
 
 FastaWriter::FastaWriter() :
   m_writeFileStream(nullptr),

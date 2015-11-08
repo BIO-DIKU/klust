@@ -56,7 +56,9 @@ ExternalProject_Add(
 	CMAKE_ARGS ${bioio_CMAKE_ARGS}
 )
 
-
+# Link BioIO
+include_directories(${bioio_INSTALL_DIR}/include)
+link_libraries(${bioio_INSTALL_DIR}/lib/libBioIO.a)
 
 
 # Executable
@@ -66,18 +68,12 @@ FILE(GLOB HEADER_FILES src/*.h src/modules/*.h)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
 
-target_link_libraries(${PROJECT_NAME} ${BIOIO_LIBRARY})
-
-#Link BioIO
-include_directories(${bioio_INSTALL_DIR}/include)
-link_libraries(${bioio_INSTALL_DIR}/lib/libBioIO.a)
-
 
 # Build tests if CMAKE_BUILD_TYPE=Debug is set
 # ------------------------
 if (CMAKE_BUILD_TYPE MATCHES DEBUG OR CMAKE_BUILD_TYPE MATCHES "Debug")
     include_directories(${BIOIO_INCLUDE_DIR})
     FILE(GLOB TEST_FILES test/*.cc test/modules/*.cc)
-    add_executable("${PROJECT_NAME}-test" ${TEST_FILES} ${BIOIO_LIBRARY})
-    target_link_libraries("${PROJECT_NAME}-test" ${BIOIO_LIBRARY})
+    add_executable("${PROJECT_NAME}-test" ${TEST_FILES})
+    target_link_libraries("${PROJECT_NAME}-test")
 endif()
