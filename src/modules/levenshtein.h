@@ -23,7 +23,8 @@
 
 #include <string>
 
-#include "../seq_entry.h"
+#include <BioIO/seq_entry.h>
+
 #include "../interface_compare.h"
 
 class LevenshteinDistance : public InterfaceCompare {

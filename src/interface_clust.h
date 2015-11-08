@@ -21,7 +21,8 @@
 #ifndef KLUST_INTERFACE_CLUST_H_
 #define KLUST_INTERFACE_CLUST_H_
 
-#include "seq_entry.h"
+#include <BioIO/seq_entry.h>
+
 #include "interface_compare.h"
 #include "interface_kmergen.h"
 

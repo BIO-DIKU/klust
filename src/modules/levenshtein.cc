@@ -23,7 +23,8 @@
 #include <cctype>
 #include <memory>
 
-#include "../seq_entry.h"
+#include <BioIO/seq_entry.h>
+
 #include "../utils.h"
 
 bool LevenshteinDistance::compare(SeqEntry* seq1, SeqEntry* seq2) {
