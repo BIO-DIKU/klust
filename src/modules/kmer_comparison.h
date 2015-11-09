@@ -18,20 +18,35 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-#ifndef KLUST_INTERFACE_COMPARE_H_
-#define KLUST_INTERFACE_COMPARE_H_
+#ifndef KLUST_KMER_COMPARISON_H_
+#define KLUST_KMER_COMPARISON_H_
 
 #include <BioIO/seq_entry.h>
 
-class InterfaceCompare {
+#include "../interface_compare.h"
+
+class KmerComparison : public InterfaceCompare {
  public:
-  virtual bool Compare(const SeqEntry& seq1, const SeqEntry& seq2) = 0;
+  KmerComparison(int kmer_size, int step_size)
+      : kmer_size_(kmer_size),
+        step_size_(step_size) {
+  }
 
-  void setIdentity(float id) { m_identity = id; }
-  float getIdentity() const { return m_identity; }
+  /*
+   * Returns true if the similarity of the two given SeqEntries is at
+   * least the threshold similarity. Otherwise it returns false.
+   */
+  bool Compare(const SeqEntry& seq1, const SeqEntry& seq2);
 
- protected:
-  float m_identity; // Similarity identity
+  /*
+   * Returns the similarity of the two given SeqEntries, i.e. a value in the
+   * interval [0,1], where 0 means low similarity and 1 means high similarity.
+   */
+  double Similarity(const SeqEntry& seq1, const SeqEntry& seq2);
+
+ private:
+  int kmer_size_;
+  int step_size_;
 };
 
-#endif  // KLUST_INTERFACE_COMPARE_H_
+#endif  // KLUST_KMER_COMPARISON_H_

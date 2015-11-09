@@ -29,7 +29,7 @@
 
 class LevenshteinDistance : public InterfaceCompare {
  public:
-  bool compare(SeqEntry* seq1, SeqEntry* seq2);
+  bool Compare(const SeqEntry& seq1, const SeqEntry& seq2);
 };
 
 #endif  // KLUST_MODULES_LEVENSHTEIN_H_
